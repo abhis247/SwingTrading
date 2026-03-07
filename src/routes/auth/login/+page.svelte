@@ -75,7 +75,9 @@
 
 <div class="container">
   <div class="card">
-
+<div class="logo">
+  <img src="/logo.png" alt="Construction Wizards" />
+</div>
     <div class="form">
 
       <h2 class="title">Welcome Back 👋</h2>
@@ -133,120 +135,230 @@
 {/if}
 
 <style>
-  :global(*) { box-sizing: border-box; }
-  :global(html, body) {
-    margin: 0;
-    padding: 0;
-  }
+ :global(*){box-sizing:border-box}
 
-  /* FULL SCREEN CONTAINER */
-  .container {
-    min-height: 100vh;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    background: #f8fafc;
-  }
+:global(html,body){
+margin:0;
+padding:0;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
 
-  /* FULL HEIGHT CARD */
-  .card {
-    width: 100%;
-    max-width: 480px;
-    min-height: 100vh;
-    background: white;
-    padding: 32px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+/* ================= CONTAINER ================= */
 
-  .form {
-    width: 100%;
-  }
+.container{
+min-height:100vh;
 
-  .title {
-    text-align: center;
-    margin-bottom: 28px;
-  }
+display:flex;
+justify-content:center;
+align-items:stretch;
 
-  .field {
-    margin-bottom: 20px;
-  }
+background:
+radial-gradient(circle at top,#eef2ff,#f8fafc);
 
-  .input {
-    width: 100%;
-    height: 56px;
-    padding: 0 16px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    font-size: 16px;
-    outline: none;
-  }
+padding:0;
+}
 
-  .input:focus {
-    border-color: #1b8e5a;
-    box-shadow: 0 0 0 2px rgba(27,142,90,0.15);
-  }
+/* ================= CARD ================= */
 
-  .input-error {
-    border-color: #dc2626;
-  }
+.card{
+width:100%;
+min-height:100vh;
 
-  .error {
-    color: #dc2626;
-    font-size: 13px;
-    margin-top: 6px;
-  }
+background:white;
 
-  .login-btn,
-  .google-btn {
-    width: 100%;
-    height: 56px;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-  }
+padding:36px 20px;
 
-  .login-btn {
-    background: #16a34a;
-  }
+display:flex;
+flex-direction:column;
+}
 
-  .google-btn {
-    background: #9d3ca3;
-    margin-top: 10px;
-  }
+/* ================= LOGO ================= */
 
-  .or {
-    margin: 22px 0;
-    text-align: center;
-    color: #6b7280;
-  }
+.logo{
+display:flex;
+justify-content:center;
+}
 
-  .signup {
-    margin-top: 24px;
-    text-align: center;
-    color: #6b7280;
-  }
+.logo img{
+max-height:115px;
+width:auto;
+object-fit:contain;
+}
 
-  .signup a {
-    color: #1b8e5a;
-    font-weight: 600;
-    text-decoration: underline;
-  }
+/* ================= TITLE ================= */
 
-  .toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #111827;
-    color: white;
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    z-index: 999;
-  }
+.title{
+text-align:center;
+font-size:26px;
+font-weight:700;
+color:#111827;
+}
+
+/* ================= FIELD ================= */
+
+.field{
+margin-bottom:20px;
+}
+
+/* ================= INPUT ================= */
+
+.input{
+width:100%;
+height:56px;
+
+padding:0 16px;
+
+border-radius:12px;
+
+border:1px solid #e5e7eb;
+
+font-size:16px;
+
+background:#f9fafb;
+
+outline:none;
+
+transition:.2s;
+}
+
+.input:focus{
+background:white;
+border-color:#11ba66;
+box-shadow:0 0 0 3px rgba(17,186,102,.15);
+}
+
+.input-error{
+border-color:#dc2626;
+}
+
+/* ================= ERROR ================= */
+
+.error{
+color:#dc2626;
+font-size:13px;
+margin-top:6px;
+}
+
+/* ================= BUTTONS ================= */
+
+.login-btn,
+.google-btn{
+width:100%;
+height:56px;
+
+border:none;
+border-radius:12px;
+
+font-size:16px;
+font-weight:bold;
+
+color:white;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+/* LOGIN BUTTON */
+
+.login-btn{
+background:#16a34a;
+}
+
+.login-btn:hover{
+background:#15803d;
+transform:translateY(-2px);
+}
+
+/* GOOGLE BUTTON */
+
+.google-btn{
+background:#9d3ca3;
+margin-top:10px;
+}
+
+.google-btn:hover{
+background:#7e2c85;
+transform:translateY(-2px);
+}
+
+/* ================= TEXT ================= */
+
+.or{
+text-align:center;
+color:#6b7280;
+}
+
+.signup{
+margin-top:24px;
+text-align:center;
+color:#6b7280;
+}
+
+.signup a{
+color:#11ba66;
+font-weight:600;
+text-decoration:underline;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+position:fixed;
+
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+
+background:#111827;
+color:white;
+
+padding:14px 20px;
+
+border-radius:10px;
+
+font-size:14px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+z-index:999;
+}
+
+/* ================= DESKTOP ================= */
+
+@media(min-width:768px){
+
+.container{
+align-items:center;
+padding:20px;
+}
+
+.card{
+max-width:500px;
+min-height:auto;
+
+border-radius:20px;
+
+border:1px solid #e5e7eb;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05),
+0 20px 60px rgba(0,0,0,.08);
+
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+
+box-shadow:
+0 25px 80px rgba(0,0,0,.15),
+0 30px 90px rgba(0,0,0,.18);
+}
+
+.logo img{
+max-height:120px;
+}
+
+}
 </style>

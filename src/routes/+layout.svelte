@@ -40,19 +40,21 @@
 
       if (role === "admin" && user.uid === superAdminUid) {
         if (!currentPath.startsWith("/admin")) {
-          goto("/admin/dashboard");
+        goto("/admin/dashboard", { replaceState: true });
         }
       } 
       else if (role === "mentor") {
         if (!currentPath.startsWith("/mentor")) {
-          goto("/mentor/dashboard");
+        goto("/mentor/dashboard", { replaceState: true });
         }
       } 
       else {
         if (!currentPath.startsWith("/page")) {
-          goto("/page/home");
-        }
+        goto("/page/home", { replaceState: true });
+      
       }
+
+    }
 
       loading = false;
     });
