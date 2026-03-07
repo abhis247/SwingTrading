@@ -22,7 +22,7 @@
   onMount(() => {
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        goto("/auth/login");
+        goto("/auth/login" ,{ replaceState:true });
         return;
       }
 

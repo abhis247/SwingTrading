@@ -2,6 +2,9 @@
   import { auth } from "$lib/firebase";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
+  import AppBar from "$lib/AppBar1.svelte";
+    import AppBar1 from "$lib/AppBar1.svelte";
+
 
   let user: any = null;
 
@@ -25,10 +28,7 @@
 <div class="page">
 
   <!-- APPBAR -->
-  <div class="appbar">
-    <button class="back-btn" on:click={goBack}>←</button>
-    <h2>My Profile</h2>
-  </div>
+<AppBar title="Become mentor" showBack={true} />
 
   <!-- PROFILE IMAGE -->
   <div class="profile-wrapper">
@@ -87,35 +87,12 @@
   background: #f5f7fb;
 }
 
-/* APPBAR */
-.appbar {
-  background: #1fae4b;
-  color: white;
-  padding: 18px 16px 70px;
-  position: relative;
-  text-align: center;
-}
 
-.back-btn {
-  position: absolute;
-  left: 12px;
-  top: 16px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: white;
-  cursor: pointer;
-}
 
-.appbar h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 600;
-}
 
 /* PROFILE IMAGE */
 .profile-wrapper {
-  margin-top: -50px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -158,7 +135,7 @@
 
 /* CONTENT */
 .content {
-  padding: 70px 16px 16px;
+  padding: 28px 16px 16px;
 }
 
 .card {
