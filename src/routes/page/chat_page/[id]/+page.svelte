@@ -24,7 +24,7 @@
   onMount(() => {
     auth.onAuthStateChanged(async (u) => {
       if (!u) {
-        goto("/login");
+        goto("/auth/login");
         return;
       }
 

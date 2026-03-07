@@ -7,7 +7,7 @@
 
   onMount(() => {
     auth.onAuthStateChanged((u) => {
-      if (!u) goto("/auth/login");
+      if (!u) goto("/auth/login",{ replaceState:true });
       else user = u;
     });
   });

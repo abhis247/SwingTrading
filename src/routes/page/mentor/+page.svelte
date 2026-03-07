@@ -15,10 +15,7 @@
   //////////////////////////////////////////////////////
   onMount(() => {
     auth.onAuthStateChanged(async (u) => {
-      if (!u) {
-        goto("/login");
-        return;
-      }
+      
 
       user = u;
       await loadMentors();
@@ -59,8 +56,10 @@
   // CONTACT MENTOR
   //////////////////////////////////////////////////////
   async function contactMentor(mentor: any) {
-    if (!user) return;
-
+  if (!user) {
+    goto("/auth/login");
+    return;
+  }
     const roomId = await getOrCreateChatRoom(user.uid, mentor.uid);
     goto(`/page/chat_page/${roomId}`);
   }

@@ -17,7 +17,7 @@
       user = u;
 
       if (!user) {
-        goto("/login");
+        goto("/auth/login" ,{ replaceState:true });
         return;
       }
 
