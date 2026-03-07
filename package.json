@@ -23,6 +23,7 @@
 	"dependencies": {
 		"@supabase/supabase-js": "^2.97.0",
 		"firebase": "^12.9.0",
+		"lucide-svelte": "^0.577.0",
 		"razorpay": "^2.9.6"
 	}
 }

@@ -5,6 +5,7 @@
   import { onMount, tick } from "svelte";
   import { signOut } from "firebase/auth";
   import { onDestroy } from "svelte";
+  import { MessageCircle } from "lucide-svelte";
 
   let myCoursesLoaded = false;
   let user: any = null;
@@ -265,12 +266,24 @@ onDestroy(() => {
     <button class="icon-btn" on:click={() => goto("/page/support")}>
       Support
     </button>
+    <button class="mentor-btn" on:click={() => goto("/page/become_mentor")}>
+  Become a mentor
+</button>
+{#if user}
+  <button class="icon-btn logout" on:click={logout}>
+    Logout
+  </button>
+{:else}
+  <button class="icon-btn login" on:click={() => goto('/auth/login')}>
+    Login
+  </button>
+{/if}
 
-    <button class="icon-btn logout" on:click={logout}>
-      Logout
-    </button>
   </div>
 
+ <button class="icon-btn discussion-btn" on:click={() => goto("/page/discussion")}>
+  <MessageCircle size={20} />
+</button>
   <!-- MOBILE MENU -->
   <div class="menu-wrapper mobile-menu">
     <button class="icon-btn" on:click={() => showMenu = !showMenu}>
@@ -279,10 +292,19 @@ onDestroy(() => {
 
     {#if showMenu}
       <div class="dropdown">
-        <button on:click={() => goto("/page/discussion")}>Discussion</button>
         <button on:click={() => goto("/page/profile")}>Profile</button>
         <button on:click={() => goto("/page/support")}>Support</button>
-        <button on:click={logout}>Logout</button>
+        <button on:click={() => goto("/page/become_mentor")}>Become a mentor</button>
+
+{#if user}
+  <button  on:click={logout}>
+    Logout
+  </button>
+{:else}
+  <button  on:click={() => goto('/auth/login')}>
+    Login
+  </button>
+{/if}
       </div>
     {/if}
   </div>
@@ -295,6 +317,11 @@ onDestroy(() => {
     {#if user}
       <div class="welcome">
         <h3>Hi, {user.displayName || "Student"} 👋</h3>
+        <p>Ready to continue learning?</p>
+      </div>
+      {:else}
+       <div class="welcome">
+        <h3>Hi, Student 👋</h3>
         <p>Ready to continue learning?</p>
       </div>
     {/if}
@@ -533,6 +560,13 @@ h1,h2,h3,h4,h5,p{
   font-size: 18px;
 }
 
+
+.discussion-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .welcome h3 {
   margin: 14px 0 4px;
   font-size: 20px;
@@ -549,32 +583,77 @@ h1,h2,h3,h4,h5,p{
 .menu-wrapper {
   position: relative;
 }
+/* ================= ENHANCED DROPDOWN ================= */
 
-.dropdown {
-  position: absolute;
-  right: 0;
-  top: 42px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 999;
+.dropdown{
+  position:absolute;
+  right:6px;
+  top:46px;
+
+  min-width:158px;
+
+  background:white;
+  border-radius:14px;
+
+  padding:6px;
+
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
+
+  display:flex;
+  flex-direction:column;
+
+  z-index:999;
+
+  animation:dropdownFade .18s ease;
 }
 
-.dropdown button {
-  padding: 12px 16px;
-  border: none;
-  background: white;
-  text-align: left;
-  cursor: pointer;
+/* menu items */
+
+.dropdown button{
+  display:flex;
+  align-items:center;
+
+  padding:8px;
+
+  border:none;
+  background:transparent;
+
+  font-size:14px;
+  font-weight:500;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  transition:all .18s ease;
 }
 
-.dropdown button:hover {
-  background: #f1f5f9;
+/* hover effect */
+
+.dropdown button:hover{
+  background:#f3f4f6;
+  transform:translateX(4px);
 }
 
+/* logout highlight */
+
+.dropdown button:last-child{
+  color:#ff4d4f;
+  font-weight:600;
+}
+
+/* smooth open animation */
+
+@keyframes dropdownFade{
+  from{
+    opacity:0;
+    transform:translateY(-8px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
 /* ================= SECTION ================= */
 
 .section {
@@ -921,8 +1000,32 @@ h1,h2,h3,h4,h5,p{
   justify-content:center;
   position:relative;
 }
+.mentor-btn{
+  white-space: nowrap;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
+  padding:6px 14px;
+  font-size:19px;   /* change font size here */
 
+  border-radius:8px;
+  border:none;
+
+  font-weight:600;
+
+  color:white;
+
+  cursor:pointer;
+
+  transition:all .25s ease;
+  background: transparent;
+}
+
+.mentor-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(0,0,0,.2);
+}
 
 .icon-btn{
   background:transparent;
@@ -935,6 +1038,10 @@ h1,h2,h3,h4,h5,p{
 }
 /* ================= HEADER CONTROLS ================= */
 
+
+  .discussion-btn{
+    display:none;
+  }
 
 .mobile-menu{
   display:none;
