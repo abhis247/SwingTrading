@@ -81,32 +81,74 @@
     isEnrolled = !!data?.length;
   }
 
-  async function enrollNow() {
-    if (!user) {
-      goto("/auth/login");
-      return;
-    }
+ async function enrollNow() {
 
-    if (isEnrolled) {
-      goto(`/page/enroll_course`);
-      return;
-    }
-
-    enrollLoading = true;
-
-    await supabase.from("enrollments").upsert(
-      {
-        user_id: user.uid,
-        course_id: courseId
-      },
-      { onConflict: "user_id,course_id" }
-    );
-
-    isEnrolled = true;
-    enrollLoading = false;
-
-    goto(`/page/enroll_course`);
+  if (!user) {
+    goto("/auth/login");
+    return;
   }
+
+  if (isEnrolled) {
+    goto(`/page/enroll_course`);
+    return;
+  }
+
+  // FREE COURSE
+  if (!course.price || course.price === 0) {
+    await supabase.from("enrollments").insert({
+      user_id: user.uid,
+      course_id: courseId
+    });
+
+    goto(`/page/enroll_course_detail/${courseId}`);
+    return;
+  }
+
+  enrollLoading = true;
+
+  // Create Razorpay order
+  const res = await fetch("/api/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: course.price })
+  });
+
+  const order = await res.json();
+
+  const options = {
+    key: import.meta.env.PUBLIC_RAZORPAY_KEY,
+    amount: order.amount,
+    currency: "INR",
+    name: "Construction Wizards",
+    description: course.title,
+    order_id: order.id,
+
+    handler: async function (response: any) {
+
+      await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...response,
+          courseId: courseId,
+          userId: user.uid
+        })
+      });
+
+      isEnrolled = true;
+      goto(`/page/enroll_course_detail/${courseId}`);
+    },
+
+    theme: {
+      color: "#11ba66"
+    }
+  };
+
+  const rzp = new (window as any).Razorpay(options);
+  rzp.open();
+
+  enrollLoading = false;
+}
 </script>
 <div class="page">
   <AppBar title="Course detail" showBack={true}/>
