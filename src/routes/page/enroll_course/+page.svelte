@@ -1,0 +1,219 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { supabase } from "$lib/supabase";
+  import { auth } from "$lib/firebase";
+  import { goto } from "$app/navigation";
+  import AppBar from "$lib/AppBar1.svelte";
+
+  let courses: any[] = [];
+  let loading = true;
+  let user: any = null;
+
+  //////////////////////////////////////////////////////
+  // INIT
+  //////////////////////////////////////////////////////
+  onMount(() => {
+    auth.onAuthStateChanged(async (u) => {
+      user = u;
+
+      if (!user) {
+        loading = false;
+        return;
+      }
+
+      await fetchMyCourses();
+    });
+  });
+
+  //////////////////////////////////////////////////////
+  // FETCH ENROLLED COURSES
+  //////////////////////////////////////////////////////
+  async function fetchMyCourses() {
+    loading = true;
+
+    try {
+      // 🔥 get enrolled course ids
+      const { data: enrollments } = await supabase
+        .from("enrollments")
+        .select("course_id")
+        .eq("user_id", user.uid);
+
+      if (!enrollments || enrollments.length === 0) {
+        loading = false;
+        return;
+      }
+
+      const courseIds = enrollments.map((e) => e.course_id);
+
+      // 🔥 fetch course details
+      const { data: courseData } = await supabase
+        .from("courses")
+        .select("*")
+        .in("id", courseIds)
+        .order("created_at", { ascending: false });
+
+      courses = courseData || [];
+      loading = false;
+    } catch (e) {
+      console.log("My course error:", e);
+      loading = false;
+    }
+  }
+
+  //////////////////////////////////////////////////////
+  // NAVIGATION
+  //////////////////////////////////////////////////////
+  function openCourse(course: any) {
+    goto(`/page/enroll_course_detail/${course.id}`);
+  }
+</script>
+
+<div class="page">
+ 
+  
+  <AppBar title="My Courses" showBack={true}/>
+
+  {#if loading}
+    <div class="center">Loading courses...</div>
+
+  {:else if courses.length === 0}
+    <div class="center empty">
+      <h3>No courses enrolled yet</h3>
+      <p>Start learning by enrolling in a course</p>
+    </div>
+
+  {:else}
+
+    <div class="list">
+      {#each courses as course}
+        <button
+          type="button"
+          class="card"
+          on:click={() => openCourse(course)}
+        >
+          <!-- TOP -->
+          <div class="top">
+            <!-- banner -->
+            <img
+              src={course.banner}
+              alt="course"
+              on:error={(e:any)=> e.target.src="/placeholder.jpg"}
+            />
+
+            <!-- INFO -->
+            <div class="info">
+              <h3>{course.title}</h3>
+              <p>{course.category}</p>
+            </div>
+
+            <div class="play">▶</div>
+          </div>
+
+          <!-- BOTTOM -->
+          <div class="bottom">
+            <span class="continue">Continue Learning</span>
+
+            <span class="badge">Enrolled</span>
+          </div>
+        </button>
+      {/each}
+    </div>
+
+  {/if}
+</div>
+
+<style>
+.page {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+
+
+/* EMPTY */
+.center {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty h3 {
+  margin-bottom: 6px;
+}
+
+/* LIST */
+.list {
+  padding: 16px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+
+/* TOP */
+.top {
+  display: flex;
+  gap: 12px;
+}
+
+.top img {
+  height: 75px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.info p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: grey;
+}
+
+.play {
+  font-size: 26px;
+  color: #1b8e5a;
+}
+
+/* BOTTOM */
+.bottom {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.continue {
+  color: #1b8e5a;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.badge {
+  background: rgba(27,142,90,.12);
+  color: #1b8e5a;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+</style>

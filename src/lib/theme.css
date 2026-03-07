@@ -1,0 +1,38 @@
+:root {
+  --scaffold-bg: #F4F6F8;
+  --appbar-bg: #1B8E5A;
+  --text-white: #ffffff;
+}
+
+/* Scaffold */
+body {
+  margin: 0;
+  background: var(--scaffold-bg);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* AppBar */
+.appbar {
+  height: 88px;
+  background: var(--appbar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+}
+
+.appbar .title {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.menu-btn {
+ 
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
