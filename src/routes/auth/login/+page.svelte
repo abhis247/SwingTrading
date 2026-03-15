@@ -152,8 +152,8 @@ display:flex;
 justify-content:center;
 align-items:stretch;
 
-background:
-radial-gradient(circle at top,#eef2ff,#f8fafc);
+
+background:linear-gradient(135deg,#20559b,#11ba66);
 
 padding:0;
 }

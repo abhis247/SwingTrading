@@ -44,12 +44,14 @@ export async function signInWithGoogle() {
 export async function signUpUser(
   name: string,
   email: string,
-  password: string
+  password: string,
+  phone:string
 ) {
   const credential = await createUserWithEmailAndPassword(
     auth,
     email.trim(),
-    password.trim()
+    password.trim(),
+    
   );
 
   if (credential.user) {
@@ -57,7 +59,7 @@ export async function signUpUser(
       displayName: name
     });
       // 3️⃣ create supabase user
-    await createUserIfNotExists(name);
+    await createUserIfNotExists(name,phone);
     
   }
 

@@ -1,7 +1,7 @@
 import { auth } from "$lib/firebase";
 import { supabase } from "$lib/supabase";
 
-export async function createUserIfNotExists(name?: string) {
+export async function createUserIfNotExists(name?: string,phone?:string) {
   const user = auth.currentUser;
   if (!user) return;
 
@@ -15,12 +15,13 @@ export async function createUserIfNotExists(name?: string) {
 
     if (data) return;
 
-    // 🆕 insert user
+    // 🆕 insert 
+    
     await supabase.from("users").insert({
       uid: user.uid,
       name: name ?? user.displayName ?? "User",
       email: user.email ?? "",
-      phone: user.phoneNumber ?? "",
+      phone: user.phoneNumber ?? phone??"",
       role: "user",
       is_active: true,
       enrollment_ids: [],

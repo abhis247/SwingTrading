@@ -2,11 +2,15 @@
   import { signUpUser, signInWithGoogle } from "$lib/firebase";
   import { goto } from "$app/navigation";
 
+  
   let name = "";
   let email = "";
   let password = "";
+  let phone = "";
+ let phoneError = "";
   let loading = false;
   let googleLoading = false;
+
 
   let nameError = "";
   let emailError = "";
@@ -29,6 +33,9 @@
     return /^[\w\.-]+@([\w-]+\.)+[\w-]{2,}$/.test(email);
   }
 
+  function validatePhone(phone: string): boolean {
+  return /^[6-9]\d{9}$/.test(phone);
+}
   /* ================= AUTO VALIDATION ================= */
 
   $: {
@@ -56,11 +63,24 @@
       passwordError = "";
     }
   }
-
+$: {
+  if (phone.length === 0) {
+    phoneError = "";
+  } 
+  else if (phone.length < 10) {
+    phoneError = "";
+  } 
+  else {
+    phoneError = validatePhone(phone)
+      ? ""
+      : "Enter valid mobile number";
+  }
+}
   function validateForm(): boolean {
     if (!name.trim()) nameError = "Name is required";
     if (!email.trim()) emailError = "Email is required";
     if (!password) passwordError = "Password is required";
+    if (!phone.trim()) phoneError = "Phone number is required";
 
     return !nameError && !emailError && !passwordError;
   }
@@ -73,7 +93,7 @@
     loading = true;
 
     try {
-      await signUpUser(name, email, password);
+      await signUpUser(name, email, password,phone);
 
       showSnackbar("Account created successfully 🎉");
 
@@ -158,6 +178,21 @@
         <p class="error">{passwordError}</p>
       {/if}
     </div>
+    
+    <div class="field">
+    <input
+  type="tel"
+  placeholder="Phone Number"
+  bind:value={phone}
+  inputmode="numeric"
+  pattern="[0-9]{10}"
+  maxlength="10"
+  class="input {phoneError ? 'input-error' : ''}"
+/>
+  {#if phoneError}
+    <p class="error">{phoneError}</p>
+  {/if}
+</div>
 
     <button class="register-btn" on:click={handleSignup} disabled={loading}>
       {loading ? "Please wait..." : "Register"}
@@ -199,9 +234,7 @@ display:flex;
 justify-content:center;
 align-items:stretch;
 
-background:
-radial-gradient(circle at top,#eef2ff,#f8fafc);
-
+background:linear-gradient(135deg,#20559b,#11ba66);
 padding:0;
 }
 

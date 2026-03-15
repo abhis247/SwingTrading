@@ -315,7 +315,7 @@ if (user && currentPath.startsWith("/auth")) {
         loading = false;
 
         if (!currentPath.startsWith("/auth/")) {
-          goto("/auth/login", { replaceState:true });
+          goto("/auth/signup", { replaceState:true });
         }
         return;
       }
