@@ -300,12 +300,22 @@ h1{
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       const currentPath = $page.url.pathname;
 
+    
+
+
+// 🔒 Logged user trying to open auth pages
+if (user && currentPath.startsWith("/auth")) {
+  goto("/page/home", { replaceState: true });
+  loading = false;
+  return;
+}
+
       // 🔒 Not logged
       if (!user) {
         loading = false;
 
         if (!currentPath.startsWith("/auth/")) {
-          goto("/auth/login");
+          goto("/auth/login", { replaceState:true });
         }
         return;
       }
@@ -315,17 +325,17 @@ h1{
 
       if (role === "admin" && user.uid === superAdminUid) {
         if (!currentPath.startsWith("/admin")) {
-          goto("/admin/dashboard");
+          goto("/admin/dashboard",{ replaceState:true });
         }
       } 
       else if (role === "mentor") {
         if (!currentPath.startsWith("/mentor")) {
-          goto("/mentor/dashboard");
+          goto("/mentor/dashboard",{ replaceState:true });
         }
       } 
       else {
         if (!currentPath.startsWith("/page")) {
-          goto("/page/home");
+          goto("/page/home",{ replaceState:true });
         }
       }
 
