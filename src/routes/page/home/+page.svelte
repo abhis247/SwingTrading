@@ -199,7 +199,8 @@ $: activeWebinars = webinars.filter(
 
   auth.onAuthStateChanged(async (u) => {
 
-    if (!u) return;
+      if (!u) return goto("/auth/login",{ replaceState:true });
+
     
 
     user = u;
