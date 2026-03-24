@@ -282,7 +282,7 @@ h1{
   import { supabase } from "$lib/supabase";
   import { snackbar } from "$lib/snackbar";
 
-  const superAdminUid = "Zzjym4rd6jbxlDsUxCMxZbx2juu2";
+  const superAdminUid = "SlEcCRpD6NSPIQDwK46TWhTXzn22";
 
   let loading = true;
 
@@ -296,54 +296,117 @@ h1{
     return data?.role ?? "user";
   }
 
-  onMount(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      const currentPath = $page.url.pathname;
+//   onMount(() => {
+//     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+//       const currentPath = $page.url.pathname;
 
     
 
 
-// 🔒 Logged user trying to open auth pages
-if (user && currentPath.startsWith("/auth")) {
-  goto("/page/home", { replaceState: true });
-  loading = false;
-  return;
-}
+// // 🔒 Logged user trying to open auth pages
+// if (user && currentPath.startsWith("/auth")) {
+//   goto("/page/home", { replaceState: true });
+//   loading = false;
+//   return;
+// }
 
-      // 🔒 Not logged
-      if (!user) {
-        loading = false;
+//       // 🔒 Not logged
+//       if (!user) {
+//         loading = false;
 
-        if (!currentPath.startsWith("/auth/")) {
-          goto("/auth/signup", { replaceState:true });
-        }
-        return;
-      }
+//         if (!currentPath.startsWith("/auth/")) {
+//           goto("/auth/signup", { replaceState:true });
+//         }
+//         return;
+//       }
 
-      // 🔥 Get role
-      const role = await fetchRole(user.uid);
+//       // 🔥 Get role
+//       const role = await fetchRole(user.uid);
+//       console.log("UID:", user.uid);
+// console.log("ROLE:", role);
 
-      if (role === "admin" && user.uid === superAdminUid) {
-        if (!currentPath.startsWith("/admin")) {
-          goto("/admin/dashboard",{ replaceState:true });
-        }
-      } 
-      else if (role === "mentor") {
-        if (!currentPath.startsWith("/mentor")) {
-          goto("/mentor/dashboard",{ replaceState:true });
-        }
-      } 
-      else {
-        if (!currentPath.startsWith("/page")) {
-          goto("/page/home",{ replaceState:true });
-        }
-      }
+//       if (role === "admin" && user.uid === superAdminUid) {
+//         if (!currentPath.startsWith("/admin")) {
+//           goto("/admin/dashboard",{ replaceState:true });
+//         }
+//       } 
+//       else if (role === "mentor") {
+//         if (!currentPath.startsWith("/mentor")) {
+//           goto("/mentor/dashboard",{ replaceState:true });
+//         }
+//       } 
+//       else {
+//         if (!currentPath.startsWith("/page")) {
+//           goto("/page/home",{ replaceState:true });
+//         }
+//       }
 
+//       loading = false;
+//     });
+
+//     return unsubscribe;
+//   });
+
+
+onMount(() => {
+  const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const currentPath = $page.url.pathname;
+
+    // 🔒 Not logged
+    if (!user) {
       loading = false;
-    });
 
-    return unsubscribe;
+      if (!currentPath.startsWith("/auth/")) {
+        goto("/auth/signup", { replaceState: true });
+      }
+      return;
+    }
+
+    // 🔥 SUPER ADMIN (instant redirect)
+    if (user.uid === superAdminUid) {
+      if (!currentPath.startsWith("/admin")) {
+        goto("/admin/dashboard", { replaceState: true });
+      }
+      loading = false;
+      return;
+    }
+
+    // 🔥 Get role
+    const role = await fetchRole(user.uid);
+
+    console.log("UID:", user.uid);
+    console.log("ROLE:", role);
+
+    // 🔒 If on auth page → redirect AFTER role check
+    if (currentPath.startsWith("/auth")) {
+      if (role === "mentor") {
+        goto("/mentor/dashboard", { replaceState: true });
+      } else {
+        goto("/page/home", { replaceState: true });
+      }
+      loading = false;
+      return;
+    }
+
+    // ✅ Mentor
+    if (role === "mentor") {
+      if (!currentPath.startsWith("/mentor")) {
+        goto("/mentor/dashboard", { replaceState: true });
+      }
+    }
+
+    // ✅ User
+    else {
+      if (!currentPath.startsWith("/page")) {
+        goto("/page/home", { replaceState: true });
+      }
+    }
+
+    loading = false;
   });
+
+  return unsubscribe;
+});
 </script>
 
 {#if loading}

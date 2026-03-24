@@ -3,6 +3,8 @@
   import { auth } from "$lib/firebase";
   import { onMount } from "svelte";
   import AppBar from "$lib/AppBar1.svelte";
+    import { snackbar } from "$lib/snackbar";
+    import { goto } from "$app/navigation";
 
   let user: any = null;
   let loading = false;
@@ -13,6 +15,8 @@
   let duration = "";
   let level = "";
   let description = "";
+
+  let price = 0;
 
   let bannerFile: File | null = null;
   let bannerPreview = "";
@@ -107,6 +111,7 @@
           level,
           banner: banner,
           mentor_id: user.uid,
+          price: price,
         })
         .select()
         .single();
@@ -134,7 +139,10 @@
         }
       }
 
-      alert("Course created successfully!");
+      snackbar.show("Course created successfully 🚀");
+      setTimeout(() => {
+  goto("/admin/dashboard");
+}, 1200);
     } catch (e) {
       console.error(e);
       alert("Error creating course");
@@ -177,6 +185,8 @@
     <div class="column">
       <input placeholder="Duration" bind:value={duration} />
       <input placeholder="Level" bind:value={level} />
+      <input placeholder="Price ($)"  bind:value={price}  type="number" 
+/>
     </div>
 
     <textarea placeholder="Description" bind:value={description}></textarea>
@@ -254,4 +264,7 @@ textarea{min-height:80px}
 .delete-btn{background:#e53935;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
 .preview{display:flex;gap:8px;align-items:center;font-size:13px}
 .submit{background:linear-gradient(45deg,#1b8e5a,#43a047);color:white;padding:16px;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
+
+
+
 </style>

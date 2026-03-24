@@ -18,6 +18,80 @@
   let showEditModal = false;
   let editingPostId: string | null = null;
   let editingContent = "";
+
+
+
+let uploadedPostFile: any = null;
+let uploadedReplyFile: Record<string, any> = {};
+
+let previewPost: string | null = null;
+let previewReply: Record<string, string | null> = {};
+
+let uploadingPost = false;
+let uploadingReply: Record<string, boolean> = {};
+
+
+async function handleFileUpload(file: File, type: "post" | "reply", postId?: string) {
+  if (!file) return;
+
+  // ✅ Validation
+  if (!file.type.startsWith("image/") && file.type !== "application/pdf") {
+    alert("Only image or PDF allowed");
+    return;
+  }
+
+  if (file.type.startsWith("image/") && file.size > 2 * 1024 * 1024) {
+    alert("Image max 2MB");
+    return;
+  }
+
+  if (file.type === "application/pdf" && file.size > 5 * 1024 * 1024) {
+    alert("PDF max 5MB");
+    return;
+  }
+
+  // Preview
+  if (file.type.startsWith("image/")) {
+    if (type === "post") previewPost = URL.createObjectURL(file);
+    else if (postId) previewReply[postId] = URL.createObjectURL(file);
+  }
+
+  // Loading state
+  if (type === "post") uploadingPost = true;
+  else if (postId) uploadingReply[postId] = true;
+
+  const path = file.type.startsWith("image/")
+    ? `images/${Date.now()}-${file.name}`
+    : `pdfs/${Date.now()}-${file.name}`;
+
+  const { error } = await supabase.storage
+    .from("uploads")
+    .upload(path, file);
+
+  if (error) {
+    alert(error.message);
+    if (type === "post") uploadingPost = false;
+    else if (postId) uploadingReply[postId] = false;
+    return;
+  }
+
+  const { data } = supabase.storage
+    .from("uploads")
+    .getPublicUrl(path);
+
+  const fileData = {
+    url: data.publicUrl,
+    type: file.type.startsWith("image/") ? "image" : "pdf"
+  };
+
+  if (type === "post") {
+    uploadedPostFile = fileData;
+    uploadingPost = false;
+  } else if (postId) {
+    uploadedReplyFile[postId] = fileData;
+    uploadingReply[postId] = false;
+  }
+}
  
 function handleClickOutside(event: MouseEvent) {
   const target = event.target as HTMLElement;
@@ -247,26 +321,56 @@ function closeEdit() {
 <AppBar title="Discussion" showBack={true} />
 
 <div class="wrapper">
+<!-- ADD POST -->
+{#if user}
+  <div class="card add-post">
+    
+    <div class="add-header">
+      <input
+        bind:value={newPost}
+        placeholder="What's on your mind?"
+        on:keydown={(e) => e.key === "Enter" && addPost()}
+      />
 
-  <!-- ADD POST -->
-  {#if user}
-    <div class="card add-post">
-      <div class="add-header">
-
-
+      <!-- 📎 FILE PICK -->
+      <label class="file-btn">
+        📎
         <input
-          bind:value={newPost}
-          placeholder="What's on your mind?"
-          on:keydown={(e) => e.key === "Enter" && addPost()}
+          type="file"
+          accept="image/*,application/pdf"
+          on:change={(e) => {
+          const input = e.target as HTMLInputElement;
+         if (input?.files?.[0]) {
+        handleFileUpload(input.files[0], "post");
+  }
+}}
         />
-        <button class="post-btn" on:click={addPost}>
-          Post
-        </button>
-      </div>
+      </label>
 
-     
+      <button class="post-btn" on:click={addPost}>
+        Post
+      </button>
     </div>
-  {/if}
+
+    <!-- 🔄 Uploading -->
+    {#if uploadingPost}
+      <div class="uploading">Uploading...</div>
+    {/if}
+
+    <!-- 🖼️ Image Preview -->
+    {#if previewPost}
+      <img src={previewPost} class="post-img" />
+    {/if}
+
+    <!-- 📄 PDF Preview -->
+    {#if uploadedPostFile?.type === "pdf"}
+      <div class="pdf-preview">
+        📄 PDF ready to post
+      </div>
+    {/if}
+
+  </div>
+{/if}
 
   <!-- POSTS -->
   {#each posts as post}
@@ -367,18 +471,53 @@ function closeEdit() {
         </div>
       {/if}
 
-      {#if user && showReply[post.id]}
-        <div class="reply-input">
-          <input
-            bind:value={replyText[post.id]}
-            placeholder="Write a reply..."
-            on:keydown={(e) => e.key === "Enter" && addReply(post.id)}
-          />
-          <button class="send-btn" on:click={() => addReply(post.id)}>
-            Send
-          </button>
-        </div>
-      {/if}
+     {#if user && showReply[post.id]}
+  <div class="reply-input">
+
+    <input
+      bind:value={replyText[post.id]}
+      placeholder="Write a reply..."
+      on:keydown={(e) => e.key === "Enter" && addReply(post.id)}
+    />
+
+    <!-- 📎 FILE PICK -->
+    <label class="file-btn">
+      📎
+      <input
+        type="file"
+        accept="image/*,application/pdf"
+        on:change={(e) => {
+          const input = e.target as HTMLInputElement;
+          if (input?.files?.[0]) {
+            handleFileUpload(input.files[0], "reply", post.id);
+          }
+        }}
+      />
+    </label>
+
+    <button class="send-btn" on:click={() => addReply(post.id)}>
+      Send
+    </button>
+  </div>
+
+  <!-- 🔄 Uploading -->
+  {#if uploadingReply[post.id]}
+    <div class="uploading">Uploading...</div>
+  {/if}
+
+  <!-- 🖼️ Image Preview -->
+  {#if previewReply[post.id]}
+    <img src={previewReply[post.id]} class="reply-img-preview" />
+  {/if}
+
+  <!-- 📄 PDF Preview -->
+  {#if uploadedReplyFile[post.id]?.type === "pdf"}
+    <div class="pdf-preview">
+      📄 PDF ready to send
+    </div>
+  {/if}
+
+{/if}
 
     </div>
   {/each}
@@ -722,4 +861,50 @@ function closeEdit() {
   to { transform: scale(1); opacity: 1 }
 }
 
+
+
+.file-btn {
+  background: #eef2ff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.file-btn input {
+  display: none;
+}
+
+.uploading {
+  font-size: 13px;
+  color: #2563eb;
+  margin-top: 8px;
+}
+
+.post-img {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 12px;
+}
+
+.pdf-preview {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.reply-img-preview {
+  width: 120px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.uploading {
+  font-size: 13px;
+  color: #2563eb;
+  margin-top: 6px;
+}
 </style>

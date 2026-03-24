@@ -4,6 +4,7 @@
   import { auth } from "$lib/firebase";
   import { goto } from "$app/navigation";
   import AppBar from "$lib/AppBar1.svelte";
+    import { Currency } from "lucide-svelte";
 
   let activeTab = "project";
   let courses: any[] = [];
@@ -110,10 +111,11 @@ async function enrollWithRazorpay(course: any) {
   }
 
   // Create order
+  const amountInCents = Math.round(course.price * 100);
   const res = await fetch("/api/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: course.price })
+    body: JSON.stringify({ amount: amountInCents,currency:"USD" })
   });
 
   const order = await res.json();
@@ -121,7 +123,7 @@ async function enrollWithRazorpay(course: any) {
   const options = {
     key: import.meta.env.PUBLIC_RAZORPAY_KEY,
   amount: order.amount,
-  currency: "INR",
+  currency: "USD",
   name: "Construction Wizards",
   description: course.title,
   // image: "/logo.png", // optional logo
@@ -242,9 +244,14 @@ async function enrollWithRazorpay(course: any) {
   <div class="card-actions">
 
     <!-- Laptop Price -->
-    <div class="price">
-      {course.price ? `₹${course.price}` : "Free"}
-    </div>
+   <div class="price">
+  {course.price && course.price > 0
+    ? new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+      }).format(course.price)
+    : "Free"}
+</div>
 
     <button
       type="button"

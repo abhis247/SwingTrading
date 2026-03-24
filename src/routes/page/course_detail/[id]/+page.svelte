@@ -107,21 +107,24 @@
   enrollLoading = true;
 
   // Create Razorpay order
+  const amountInCents = Math.round(course.price * 100);
   const res = await fetch("/api/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: course.price })
+    body: JSON.stringify({ amount: amountInCents,currency:"USD" })
   });
 
   const order = await res.json();
 
   const options = {
     key: import.meta.env.PUBLIC_RAZORPAY_KEY,
-    amount: order.amount,
-    currency: "INR",
-    name: "Construction Wizards",
-    description: course.title,
-    order_id: order.id,
+  amount: order.amount,
+  currency: "USD",
+  name: "Construction Wizards",
+  description: course.title,
+  // image: "/logo.png", // optional logo
+  order_id: order.id,
+
 
     handler: async function (response: any) {
 
@@ -176,10 +179,13 @@
         <div class="price enrolled">Enrolled</div>
 
       {:else if course.price > 0}
-        <div class="price">
-          ₹{course.price}
-          <span>one time</span>
-        </div>
+  <div class="price">
+    {new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD"
+    }).format(course.price)}
+    <span>one time</span>
+  </div>
 
       {:else}
         <div class="price free">Free Course</div>
