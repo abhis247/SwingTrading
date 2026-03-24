@@ -150,14 +150,14 @@ onMount(() => {
       </div>
     {/if}
 
-    <!-- WEBINAR CARD -->
+    <!-- WEBINAR CARD
     <div class="webinar-card">
       <div>
         <h4>Flutter Live Webinar</h4>
         <p>Today • 5:00 PM</p>
       </div>
       <button class="manage-btn">Manage</button>
-    </div>
+    </div> -->
 
   </div>
 </div>
@@ -450,7 +450,7 @@ onMount(() => {
 .blue{background:#2563eb;}
 
 /* ================= WEBINAR ================= */
-
+/* 
 .webinar-card{
   margin-top:20px;
   background:white;
@@ -465,9 +465,9 @@ onMount(() => {
   box-shadow:0 8px 20px rgba(0,0,0,.08);
 
   transition:.3s;
-}
+} */
 
-.webinar-card:hover{
+/* .webinar-card:hover{
   transform:translateY(-6px);
   box-shadow:0 20px 40px rgba(0,0,0,.15);
 }
@@ -481,7 +481,7 @@ onMount(() => {
 
   border-radius:10px;
   cursor:pointer;
-}
+} */
 
 /* ================= LOADER ================= */
 
