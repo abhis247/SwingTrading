@@ -142,6 +142,56 @@
 </div>
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
 .page {
   max-width: 1000px;
   margin: auto;

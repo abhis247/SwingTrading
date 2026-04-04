@@ -282,7 +282,7 @@ h1{
   import { supabase } from "$lib/supabase";
   import { snackbar } from "$lib/snackbar";
 
-  const superAdminUid = "SlEcCRpD6NSPIQDwK46TWhTXzn22";
+  const superAdminUid = "Zzjym4rd6jbxlDsUxCMxZbx2juu2";
 
   let loading = true;
 
@@ -397,6 +397,9 @@ onMount(() => {
 
     // ✅ User
     else {
+      if ((currentPath as string) === "/page") {
+  goto("/page/home", { replaceState: true });
+}
       if (!currentPath.startsWith("/page")) {
         goto("/page/home", { replaceState: true });
       }
@@ -434,83 +437,110 @@ onMount(() => {
 {/if}
 <style>
 /* SPLASH SCREEN */
+:global(:root){
+  --clr-accent:#d4a017;
+  --clr-heading:#fff2c2;
+  --clr-accent-shadow:rgba(212,160,23,0.4);
+  --clr-bg:#000000;
+}
+
+
+/* ================= SPLASH ================= */
 
 .splash{
-  height:100vh;
+  height:100dvh;
 
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
 
-  background:linear-gradient(135deg,#20559b,#11ba66,#1e3c72);
-  background-size:300% 300%;
+  background: var(--clr-bg);
+  overflow:hidden;
+  position:relative;
 
-  color:white;
+  color: var(--clr-heading);
   text-align:center;
-
-  animation:bgMove 6s ease infinite;
 }
 
 
-/* LOGO */
+/* 🔥 STAR LAYER */
+
+.splash::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 80% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 50% 50%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 80%, #fff, transparent);
+
+  background-size: 300px 300px;
+
+  opacity:.25;
+
+  animation:starsMove 60s linear infinite;
+}
+
+
+/* ================= LOGO ================= */
 
 .logo{
-  width:120px;
-  height:120px;
+  width:150px;
+  height:150px;
 
-  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:24px;
+
+  z-index:2;
 
   animation:
     logoPop .7s ease,
-    logoFloat 2.5s ease-in-out infinite alternate;
+    logoFloat 3s ease-in-out infinite alternate;
 }
 
 .logo img{
   width:100%;
-  filter:drop-shadow(0 8px 20px rgba(0,0,0,.25));
+
+  /* 🔥 GOLD GLOW */
+  filter:
+    drop-shadow(0 0 20px rgba(212,160,23,0.7))
+    drop-shadow(0 0 40px rgba(212,160,23,0.5))
+    brightness(1.1);
 }
 
 
-/* TITLE */
-
-h1{
-  margin:6px 0 16px;
-  font-size:30px;
-  font-weight:600;
-  letter-spacing:.5px;
-}
-
-
-/* LOADING DOTS */
+/* ================= DOTS ================= */
 
 .dots{
   display:flex;
-  gap:6px;
+  gap:8px;
+
+  z-index:2;
 }
 
 .dots span{
   width:8px;
   height:8px;
 
-  background:white;
+  background: var(--clr-accent);
   border-radius:50%;
-
-  opacity:.3;
 
   animation:dotPulse 1.4s infinite;
 }
 
-.dots span:nth-child(2){
-  animation-delay:.2s;
-}
-
-.dots span:nth-child(3){
-  animation-delay:.4s;
-}
+.dots span:nth-child(2){ animation-delay:.2s; }
+.dots span:nth-child(3){ animation-delay:.4s; }
+.dots span:nth-child(4){ animation-delay:.6s; }
 
 
-/* DOT ANIMATION */
+/* ================= ANIMATIONS ================= */
 
 @keyframes dotPulse{
   0%,80%,100%{
@@ -519,43 +549,28 @@ h1{
   }
   40%{
     opacity:1;
-    transform:scale(1.2);
+    transform:scale(1.3);
   }
 }
-
-
-/* LOGO POP */
 
 @keyframes logoPop{
-  from{
-    transform:scale(.5);
-    opacity:0;
-  }
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
+  from{ transform:scale(.6); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
 }
-
-
-/* FLOATING LOGO */
 
 @keyframes logoFloat{
+  from{ transform:translateY(0px); }
+  to{ transform:translateY(-12px); }
+}
+
+/* 🔥 STAR ANIMATION */
+
+@keyframes starsMove{
   from{
-    transform:translateY(0px);
+    transform:translateY(0);
   }
   to{
-    transform:translateY(-10px);
+    transform:translateY(-200px);
   }
 }
-
-
-/* BACKGROUND GRADIENT MOVE */
-
-@keyframes bgMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
 </style>

@@ -517,8 +517,37 @@ onDestroy(() => {
   
 
 </div>
-
 <style>
+:root{
+
+  /* BACKGROUND */
+  --clr-page-bg: linear-gradient(180deg,#0a0800,#140f00);
+
+  /* CARD */
+  --clr-card-bg:#241a05;
+  --clr-card-border:rgba(212,160,23,0.25);
+
+  /* TEXT */
+  --clr-heading:#f8e8b0;
+  --clr-subtext:#b89a4a;
+
+  /* PRIMARY / GOLD */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* BUTTON */
+  --clr-btn-bg:#2f2408;
+  --clr-btn-hover:#3f310c;
+
+  /* ICON */
+  --clr-icon-bg:#2f2408;
+
+  /* HEADER */
+  --clr-header-bg: linear-gradient(135deg,#3a2a0a,#7a6515);
+
+  /* GRADIENT */
+  --grad:linear-gradient(135deg,#6b4a00,#d4a017);
+}
 /* ================= PAGE ================= */
 
 h1,h2,h3,h4,h5,p{
@@ -527,16 +556,17 @@ h1,h2,h3,h4,h5,p{
 
 .page {
   min-height: 100vh;
-  background: #f5f7fb;
+  background: var(--clr-page-bg);
+  color: var(--clr-heading);
   font-family: system-ui;
 }
 
 /* ================= HEADER ================= */
 
 .header {
-  background: var(--appbar-bg);
   padding: 20px 16px 24px;
-  color: white;
+  background: var(--clr-header-bg);
+  color: var(--clr-heading);
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
 }
@@ -553,12 +583,13 @@ h1,h2,h3,h4,h5,p{
 }
 
 .icon-btn {
-  background: white;
+  background: #f5d060;
   border: none;
   padding: 6px 10px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
+  color: #1a1000;
 }
 
 
@@ -593,12 +624,12 @@ h1,h2,h3,h4,h5,p{
 
   min-width:158px;
 
-  background:white;
+  background:#1a1200;
   border-radius:14px;
 
   padding:6px;
 
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
+  box-shadow:0 18px 40px rgba(0,0,0,.5);
 
   display:flex;
   flex-direction:column;
@@ -626,20 +657,22 @@ h1,h2,h3,h4,h5,p{
 
   cursor:pointer;
 
+  color:#f5e6c0;
+
   transition:all .18s ease;
 }
 
 /* hover effect */
 
 .dropdown button:hover{
-  background:#f3f4f6;
+  background:#2a2000;
   transform:translateX(4px);
 }
 
 /* logout highlight */
 
 .dropdown button:last-child{
-  color:#ff4d4f;
+  color:#ff9900;
   font-weight:600;
 }
 
@@ -671,7 +704,7 @@ h1,h2,h3,h4,h5,p{
 .section-title button {
   background: none;
   border: none;
-  color: #11ba66;
+  color: #d4a017;
   font-weight: 600;
   cursor: pointer;
 }
@@ -705,16 +738,19 @@ h1,h2,h3,h4,h5,p{
 /* ================= COURSE CARD ================= */
 
 .card {
-  background: white;
   padding: 20px;
+  background: var(--clr-card-bg);
+  border: 1px solid var(--clr-card-border);
+  color: var(--clr-heading);
   border-radius: 20px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5);
 }
 
 .card-top {
@@ -726,8 +762,8 @@ h1,h2,h3,h4,h5,p{
 .card-top .icon {
   width: 52px;
   height: 52px;
-  background: linear-gradient(135deg, #20559b, #11ba66);
-  color: white;
+  background: linear-gradient(135deg, #8a6a00, #d4a017);
+  color: #0a0800;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -745,7 +781,7 @@ h1,h2,h3,h4,h5,p{
 .card-top .text p {
   margin: 6px 0 0;
   font-size: 13px;
-  color: #6b7280;
+  color: #9a8040;
 }
 
 /* ================= ACTION BUTTONS ================= */
@@ -758,23 +794,25 @@ h1,h2,h3,h4,h5,p{
 
 .view {
   flex: 1;
-  background: #f3f4f6;
   border: none;
   padding: 12px;
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
+   background: var(--clr-btn-bg);
+  color: var(--clr-heading);
+
   transition: 0.2s ease;
 }
 
 .view:hover {
-  background: #e5e7eb;
+  background: var(--clr-btn-hover);
 }
 
 .enroll {
   flex: 1;
-  background: #11ba66;
-  color: white;
+  background: var(--clr-accent);
+  color: #0a0800;
   border: none;
   padding: 12px;
   border-radius: 12px;
@@ -784,8 +822,7 @@ h1,h2,h3,h4,h5,p{
 }
 
 .enroll:hover {
-  background: #0f9f57;
-}
+  background: var(--clr-accent-dark);}
 
 /* ================= HORIZONTAL SCROLL ================= */
 
@@ -808,26 +845,29 @@ h1,h2,h3,h4,h5,p{
 }
 
 .quick-grid button {
-  background: white;
+  background: var(--clr-card-bg);
+  color: var(--clr-heading);
   border: none;
   padding: 16px;
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  box-shadow: 0 4px 14px rgba(0,0,0,.3);
   font-weight: 600;
   cursor: pointer;
+ 
 }
 .course-card {
   min-width: 220px;
-  background: white;
+   background: var(--clr-card-bg);
   padding: 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  box-shadow: 0 4px 14px rgba(0,0,0,.3);
   display: flex;
   flex-direction: column;
+  color: #f5e6c0;
 }
 
 .progress {
-  background: #eee;
+  background: #2a2000;
   height: 6px;
   border-radius: 6px;
   margin-bottom: 12px;
@@ -836,8 +876,7 @@ h1,h2,h3,h4,h5,p{
 
 .bar {
   height: 100%;
-  background: #11ba66;
-}
+  background: var(--clr-accent);}
 
 .course-card button {
   margin-top: auto;
@@ -845,8 +884,8 @@ h1,h2,h3,h4,h5,p{
   padding: 10px 14px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #20559b, #11ba66);
-  color: white;
+  background: linear-gradient(135deg, #5a3e00, #d4a017);
+  color: #0a0800;
   font-weight: 600;
   cursor: pointer;
 }
@@ -863,16 +902,16 @@ h1,h2,h3,h4,h5,p{
   border: none;
   font-weight: 700;
   font-size: 15px;
-  background: linear-gradient(135deg, #20559b, #11ba66);
-  color: white;
+  background: linear-gradient(135deg, #5a3e00, #d4a017);
+  color: #0a0800;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 10px 25px rgba(32, 85, 155, 0.25);
+  box-shadow: 0 10px 25px rgba(180, 130, 0, 0.3);
 }
 
 .cta button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(32, 85, 155, 0.35);
+  box-shadow: 0 15px 35px rgba(180, 130, 0, 0.45);
 }
 /* ===== DESKTOP HEADER ITEMS ===== */
 
@@ -918,10 +957,10 @@ h1,h2,h3,h4,h5,p{
 
 .webinar-card{
   width:100%;
-  background:white;
+  background:#1a1200;
   border-radius:16px;
   overflow:hidden;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  box-shadow:0 6px 18px rgba(0,0,0,.4);
 }
 
 .webinar-card img{
@@ -932,6 +971,7 @@ h1,h2,h3,h4,h5,p{
 
 .webinar-content{
   padding:14px;
+  color:#f5e6c0;
 }
 
 .webinar-content h4{
@@ -941,7 +981,7 @@ h1,h2,h3,h4,h5,p{
 
 .webinar-content p{
   font-size:12px;
-  color:#666;
+  color:#9a8040;
 }
 
 .webinar-content button{
@@ -950,8 +990,8 @@ h1,h2,h3,h4,h5,p{
   padding:10px;
   border:none;
   border-radius:10px;
-  background:#11ba66;
-  color:white;
+  background:#d4a017;
+  color:#0a0800;
   font-weight:600;
 }
 
@@ -973,7 +1013,10 @@ h1,h2,h3,h4,h5,p{
 
 @media (min-width:1024px){
   
-
+:global(body){
+  margin:0;
+  background: linear-gradient(180deg,#0a0800,#1a1200);
+}
 /* ================= PAGE ================= */
 
 .page{
@@ -1008,14 +1051,14 @@ h1,h2,h3,h4,h5,p{
   justify-content:center;
 
   padding:6px 14px;
-  font-size:19px;   /* change font size here */
+  font-size:19px;
 
   border-radius:8px;
   border:none;
 
   font-weight:600;
 
-  color:white;
+  color:#f5d060;
 
   cursor:pointer;
 
@@ -1025,17 +1068,17 @@ h1,h2,h3,h4,h5,p{
 
 .mentor-btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 8px 18px rgba(0,0,0,.2);
+  box-shadow:0 8px 18px rgba(0,0,0,.4);
 }
 
 .icon-btn{
   background:transparent;
-  color:white;
+  color:#f5d060;
   font-weight:600;
 }
 
 .icon-btn:hover{
-  background:rgba(255,255,255,.15);
+  background:rgba(212,160,23,.15);
 }
 /* ================= HEADER CONTROLS ================= */
 
@@ -1061,8 +1104,8 @@ h1,h2,h3,h4,h5,p{
 
 
 .icon-btn.logout{
-  background:#ff4d4f;
-  color:white;
+  background:#ff9900;
+  color:#0a0800;
 }
 
 /* ================= SECTION ================= */
@@ -1082,7 +1125,7 @@ h1,h2,h3,h4,h5,p{
 /* card style */
 
 .quick-grid button{
-  background:white;
+  background:#1a1200;
   border:none;
 
   padding:22px;
@@ -1098,11 +1141,13 @@ h1,h2,h3,h4,h5,p{
   justify-content:center;
   gap:8px;
 
-  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
 
   transition:all .3s ease;
 
   cursor:pointer;
+
+  color:#f5e6c0;
 }
 
 /* icon size */
@@ -1116,11 +1161,11 @@ h1,h2,h3,h4,h5,p{
 .quick-grid button:hover{
   transform:translateY(-6px);
 
-  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
 
-  background:linear-gradient(135deg,#20559b,#11ba66);
+  background:linear-gradient(135deg,#5a3e00,#d4a017);
 
-  color:white;
+  color:#0a0800;
 }
 
 /* icon animation */
@@ -1166,9 +1211,9 @@ h1,h2,h3,h4,h5,p{
 
   border-radius:20px;
 
-  background:white;
+  background:#1a1200;
 
-  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
 
   transition:all .35s ease;
 
@@ -1179,7 +1224,7 @@ h1,h2,h3,h4,h5,p{
 .card:hover{
   transform:translateY(-10px);
 
-  box-shadow:0 25px 50px rgba(0,0,0,.15);
+  box-shadow:0 25px 50px rgba(0,0,0,.5);
 }
 
 .card-actions{
@@ -1214,7 +1259,8 @@ h1,h2,h3,h4,h5,p{
 
   border-radius:8px;
 
-  background:#f3f4f6;
+  background:#2a2000;
+  color:#d4a017;
 }
 .view,
 .enroll{
@@ -1246,7 +1292,7 @@ h1,h2,h3,h4,h5,p{
 
 .course-card:hover{
   transform:translateY(-6px);
-  box-shadow:0 18px 35px rgba(0,0,0,.12);
+  box-shadow:0 18px 35px rgba(0,0,0,.4);
 }
 
 .course-card h5{
@@ -1255,7 +1301,7 @@ h1,h2,h3,h4,h5,p{
 
 .course-card p{
   font-size:14px;
-  color:#6b7280;
+  color:#9a8040;
 }
 
 .progress{
@@ -1316,7 +1362,7 @@ h1,h2,h3,h4,h5,p{
 
 .icon-btn:hover{
   transform:translateY(-3px) scale(1.05);
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
 }
 
 }
@@ -1327,10 +1373,10 @@ h1,h2,h3,h4,h5,p{
 .quick-grid button:hover{
   transform:translateY(-8px) scale(1.03);
 
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
 
-  background:linear-gradient(135deg,#20559b,#11ba66);
-  color:white;
+  background:linear-gradient(135deg,#5a3e00,#d4a017);
+  color:#0a0800;
 }
 
 .quick-grid button span{
@@ -1343,13 +1389,13 @@ h1,h2,h3,h4,h5,p{
 /* ================= EXPLORE COURSE CARD ================= */
 
 .card{
-  background:white;
+  background:#1a1200;
   transition:all .25s ease;
 }
 
 .card:hover{
-  background:linear-gradient(135deg,#3b6fb3,#2bb673);
-  color:white;
+  background:linear-gradient(135deg,#5a3e00,#d4a017);
+  color:#0a0800;
   transform:translateY(-8px);
 }
 
@@ -1357,27 +1403,27 @@ h1,h2,h3,h4,h5,p{
 
 .card:hover h3,
 .card:hover p{
-  color:white;
+  color:#0a0800;
 }
 
 
 /* ================= YOUR COURSE CARD ================= */
 
 .course-card{
-  background:white;
+  background:#1a1200;
   transition:all .25s ease;
 }
 
 .course-card:hover{
  
-  background:linear-gradient(135deg,#3b6fb3,#2bb673);
-  color:white;
+  background:linear-gradient(135deg,#5a3e00,#d4a017);
+  color:#0a0800;
 
   transform:translateY(-6px);
 }
 
 .course-card:hover p{
-  color:white;
+  color:#0a0800;
 }
 .view,
 .enroll,
@@ -1419,6 +1465,6 @@ h1,h2,h3,h4,h5,p{
 
 .cta button:hover{
   transform:translateY(-4px) scale(1.03);
-  box-shadow:0 20px 40px rgba(32,85,155,.35);
+  box-shadow:0 20px 40px rgba(180,130,0,.45);
 }
 </style>

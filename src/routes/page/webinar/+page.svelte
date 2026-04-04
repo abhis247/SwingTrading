@@ -337,22 +337,82 @@
 {/if}
 
 {/if}
-
 <style>
-/* ---------------- SEARCH ---------------- */
+  /* ================= ROOT ================= */
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+
+/* ================= BASE ================= */
+:global(body){
+  margin:0;
+  background:var(--clr-page-bg);
+  color:var(--clr-heading);
+}
+
+/* ================= SEARCH ================= */
 .search-wrap {
   padding:12px;
 }
 
 .search-wrap input {
-  width:88%;
-  padding:16px;
+  width:100%;
+  padding:14px;
   border-radius:12px;
-  border:1px solid #ddd;
-  font-size:14px;
+  border:1px solid var(--clr-card-border);
+  background:#1a1404;
+  color:var(--clr-heading);
+  outline:none;
 }
 
-/* ---------------- FILTERS ---------------- */
+/* ================= FILTER ================= */
 .filters {
   display:flex;
   flex-wrap:wrap;
@@ -363,53 +423,59 @@
 .filters button {
   padding:8px 14px;
   border-radius:20px;
-  border:1px solid #ddd;
-  background:white;
+  border:1px solid var(--clr-card-border);
+  background:#1a1404;
+  color:var(--clr-subtext);
   font-size:13px;
+  cursor:pointer;
 }
 
 .filters button.selected {
-  background:#1b8e5a;
-  color:white;
+  background:var(--grad);
+  color:black;
 }
 
-/* ---------------- CAROUSEL ---------------- */
+/* ================= CAROUSEL ================= */
 .carousel {
   display:flex;
-  align-items:stretch;
   overflow-x:auto;
   gap:12px;
   padding:12px;
   scroll-behavior:smooth;
-  overscroll-behavior-x:contain;
 }
 
 .carousel::-webkit-scrollbar {
   display:none;
 }
 
-/* ---------------- CARD BASE ---------------- */
+/* ================= CARD ================= */
 .card {
   flex:0 0 auto;
   width:85%;
   max-width:340px;
-  height:415px;
-  background:rgb(255, 255, 255);
+  height:420px;
+  background:var(--clr-card-bg);
   border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 10px 24px rgba(0,0,0,0.5);
   display:flex;
   flex-direction:column;
+  overflow:hidden;
+  transition:.25s;
 }
 
-/* ---------------- BANNER ---------------- */
+.card:hover {
+  transform:translateY(-4px);
+}
+
+/* ================= BANNER ================= */
 .banner img {
   width:100%;
   height:170px;
   object-fit:cover;
 }
 
-/* ---------------- CONTENT ---------------- */
+/* ================= CONTENT ================= */
 .content {
   flex:1;
   display:flex;
@@ -426,205 +492,75 @@
   display:none;
 }
 
+/* ================= TEXT ================= */
 .title {
   font-size:15px;
   font-weight:600;
+  color:var(--clr-heading);
   margin-bottom:6px;
 }
 
 .desc {
   font-size:13px;
+  color:var(--clr-subtext);
   margin-bottom:8px;
-  color:#444;
 }
-
-.date {
-  font-size:12px;
-  color:#777;
-}
-
-.count {
-  font-size:12px;
-  color:#1e88e5;
-  margin-top:6px;
-}
-
-/* ---------------- BUTTON ---------------- */
-.button-wrap {
-  padding:12px;
-  text-align:right;
-}
-
-button.status {
-  padding:10px 16px;
-  border-radius:8px;
-  border:none;
-  color:white;
-  font-weight:600;
-  font-size:13px;
-}
-
-button.status.LIVE { background:#2e7d32; }
-button.status.UPCOMING { background:#fb8c00; }
-button.status.COMPLETED { background:#9e9e9e; }
-
-/* ---------------- STATES ---------------- */
-.center {
-  text-align:center;
-  padding:60px;
-}
-
-/* ===================================================== */
-/* 📱 MOBILE (DEFAULT) */
-/* ===================================================== */
-
-@media (max-width:480px) {
-
-  .card {
-    width:100%;
-    height:400px;
-  }
-
-  .banner img {
-    height:150px;
-  }
-
-  .title {
-    font-size:14px;
-  }
-
-  .desc {
-    font-size:12px;
-  }
-}
-
-/* ===================================================== */
-/* 📱 TABLET */
-/* ===================================================== */
-
-@media (min-width:768px) {
-
-  .carousel {
-    gap:16px;
-  }
-
-  .card {
-    width:300px;
-    height:420px;
-  }
-
-  .banner img {
-    height:180px;
-  }
-}
-
-/* ===================================================== */
-/* 💻 LAPTOP */
-/* ===================================================== */
-
-@media (min-width:1024px) {
-
-  .carousel {
-    padding-left:40px;
-  }
-
-  .card {
-    width:320px;
-    height:440px;
-  }
-
-  .banner img {
-    height:190px;
-  }
-
-  .title {
-    font-size:16px;
-  }
-
-  .desc {
-    font-size:14px;
-  }
-}
-
-/* ===================================================== */
-/* 🖥 DESKTOP LARGE */
-/* ===================================================== */
-
-@media (min-width:1400px) {
-
-  .carousel {
-    justify-content:center;
-  }
-
-  .card {
-    width:340px;
-    height:460px;
-  }
-
-  .banner img {
-    height:200px;
-  }
-}
-/* ---------- BADGES ---------- */
-
-.live-badge {
-  position:absolute;
-  top:10px;
-  left:10px;
-  background:#e53935;
-  color:white;
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:6px;
-  font-weight:600;
-}
-
-.category {
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  background:rgba(0,0,0,.6);
-  color:white;
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:6px;
-}
-
-/* ---------- MENTOR ---------- */
 
 .mentor {
   font-size:13px;
+  color:var(--clr-accent);
   margin:6px 0;
-  color:#333;
   font-weight:500;
 }
-
-/* ---------- INFO ROW ---------- */
 
 .info-row {
   display:flex;
   justify-content:space-between;
   font-size:12px;
-  color:#777;
+  color:var(--clr-muted);
   margin-top:6px;
 }
-
-/* ---------- ATTENDEE ---------- */
 
 .attendees {
   font-size:12px;
+  color:var(--clr-subtext);
   margin-top:6px;
-  color:#555;
 }
 
-/* ---------- BUTTON IMPROVED ---------- */
+.date {
+  font-size:12px;
+  color:var(--clr-muted);
+}
+
+.count {
+  font-size:12px;
+  color:var(--clr-accent);
+  margin-top:6px;
+}
+
+/* ================= CATEGORY ================= */
+.category {
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  background:rgba(0,0,0,.6);
+  color:var(--clr-accent);
+  border:1px solid var(--clr-accent);
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:6px;
+}
+
+/* ================= BUTTON ================= */
+.button-wrap {
+  padding:12px;
+}
 
 button.status {
   width:100%;
   padding:12px;
   border-radius:10px;
   border:none;
-  color:white;
   font-weight:600;
   font-size:14px;
   transition:.2s;
@@ -632,18 +568,48 @@ button.status {
 
 button.status:hover {
   transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 
 button.status.LIVE {
-  background:linear-gradient(45deg,#2e7d32,#43a047);
+  background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 button.status.UPCOMING {
-  background:linear-gradient(45deg,#fb8c00,#ffa726);
+  background:linear-gradient(135deg,#f59e0b,#fbbf24);
+  color:black;
 }
 
 button.status.COMPLETED {
-  background:#9e9e9e;
+  background:#374151;
+}
+
+/* ================= CENTER ================= */
+.center {
+  text-align:center;
+  padding:60px;
+  color:var(--clr-subtext);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (min-width:768px){
+  .card {
+    width:300px;
+  }
+}
+
+@media (min-width:1024px){
+  .card {
+    width:320px;
+  }
+}
+
+@media (min-width:1400px){
+  .carousel {
+    justify-content:center;
+  }
+  .card {
+    width:340px;
+  }
 }
 </style>

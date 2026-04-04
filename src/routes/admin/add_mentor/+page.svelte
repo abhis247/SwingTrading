@@ -173,38 +173,100 @@
 {/if}
 
 <style>
+:global(:root){
 
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+
+/* CARD */
 .card {
   max-width:600px;
   margin:24px auto;
-  background:white;
+  background: var(--clr-card-bg);
   padding:24px;
   border-radius:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 6px 18px var(--clr-accent-shadow);
   display:flex;
   flex-direction:column;
   gap:16px;
 }
 
+/* FIELD */
 .field {
   display:flex;
   flex-direction:column;
   gap:6px;
 }
 
+/* INPUT */
 input, textarea, select {
   padding:12px;
   border-radius:8px;
-  border:1px solid #ddd;
+  border:1px solid var(--clr-card-border);
   font-size:14px;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
 }
 
 textarea {
   min-height:100px;
 }
 
+/* LABEL */
+label {
+  color: var(--clr-subtext);
+}
+
+/* SUBMIT */
 .submit {
-  background:linear-gradient(45deg,#1b8e5a,#43a047);
+  background: var(--grad);
   color:white;
   padding:14px;
   border:none;
@@ -212,6 +274,7 @@ textarea {
   font-size:15px;
   font-weight:600;
   cursor:pointer;
+  box-shadow:0 6px 18px var(--clr-accent-shadow2);
 }
 
 .submit:disabled {
@@ -219,7 +282,7 @@ textarea {
   cursor:not-allowed;
 }
 
-/* DIALOG */
+/* ===== DIALOG ===== */
 
 .dialog-overlay {
   position:fixed;
@@ -232,12 +295,21 @@ textarea {
 }
 
 .dialog {
-  background:white;
+  background: var(--clr-card-bg);
   padding:24px;
   border-radius:14px;
   width:320px;
   text-align:center;
-  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 8px 24px var(--clr-accent-shadow);
+}
+
+.dialog h3 {
+  color: var(--clr-heading);
+}
+
+.dialog p {
+  color: var(--clr-subtext);
 }
 
 .ok-btn {
@@ -245,7 +317,7 @@ textarea {
   padding:10px 18px;
   border:none;
   border-radius:8px;
-  background:#1b8e5a;
+  background: var(--clr-accent);
   color:white;
   cursor:pointer;
 }
@@ -253,10 +325,10 @@ textarea {
 .redirect-text {
   margin-top:12px;
   font-size:13px;
-  color:#777;
+  color: var(--clr-subtext);
 }
 
-/* LOADER */
+/* ===== LOADER ===== */
 
 .overlay {
   position:fixed;
@@ -271,13 +343,30 @@ textarea {
   width:42px;
   height:42px;
   border:4px solid #fff;
-  border-top:4px solid #1b8e5a;
+  border-top:4px solid var(--clr-accent);
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
 
-@keyframes spin {
-  to { transform:rotate(360deg); }
+/* ===== VISIBILITY FIX ===== */
+input::placeholder,
+textarea::placeholder {
+  color: var(--clr-subtext);
+  opacity: 1;
 }
 
+select {
+  color: var(--clr-heading);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+}
+
+input, textarea {
+  caret-color: var(--clr-accent);
+}
 </style>

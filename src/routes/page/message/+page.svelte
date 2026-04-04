@@ -208,80 +208,152 @@
 {/if}
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+  --clr-muted:#6b7280;   /* ✅ ADD THIS */
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+/* ================= CONTAINER ================= */
 .container {
   max-width: 720px;
   margin: auto;
   padding: 16px;
+  background: var(--clr-page-bg);
+  min-height: 100vh;
 }
 
+/* ================= CARD ================= */
 .mentor-card {
-  display:flex;
-  align-items:center;
-  background:white;
-  padding:14px;
-  border-radius:16px;
-  margin-bottom:12px;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(0,0,0,.06);
-  transition:.2s;
-  border:none;
-  width:100%;
-  text-align:left;
+  display: flex;
+  align-items: center;
+  background: var(--clr-card-bg);   /* ✅ DARK */
+  padding: 14px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  border: 1px solid var(--clr-card-border);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+  transition: 0.25s;
+  width: 100%;
+  text-align: left;
 }
 
 .mentor-card:hover {
-  transform:translateY(-2px);
+  transform: translateY(-3px);
 }
 
+/* ================= AVATAR ================= */
 .avatar {
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  background:#e5e7eb;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  margin-right:14px;
-  overflow:hidden;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#7a5400,#d4a017);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 14px;
+  overflow: hidden;
+  color: black;
 }
 
 .avatar img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.content { flex:1; }
+/* ================= CONTENT ================= */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
 
+/* 👤 NAME */
 .name {
-  font-weight:600;
-  font-size:16px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--clr-heading);   /* white */
 }
 
+/* 💬 LAST MESSAGE */
 .last {
-  font-size:13px;
-  color:#64748b;
-  margin-top:4px;
+  font-size: 13px;
+  color: var(--clr-subtext);   /* gray */
 }
 
-.right { text-align:right; }
+/* ================= RIGHT ================= */
+.right {
+  text-align: right;
+}
 
+/* 🕒 TIME */
 .time {
-  font-size:11px;
-  color:#94a3b8;
-  margin-bottom:6px;
+  font-size: 11px;
+  color: var(--clr-muted);     /* dim */
+  margin-bottom: 6px;
 }
 
+/* 💬 ICON */
 .chat-icon {
-  background:#dcfce7;
-  color:#16a34a;
-  padding:8px;
-  border-radius:50%;
+  background: #1a1404;
+  color: var(--clr-accent);
+  padding: 8px;
+  border-radius: 50%;
 }
 
+/* ================= EMPTY ================= */
 .center {
-  text-align:center;
-  padding:60px;
+  text-align: center;
+  padding: 60px;
+  color: var(--clr-subtext);
 }
 </style>

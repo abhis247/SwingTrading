@@ -314,388 +314,331 @@ function handleOutsideClick(event: MouseEvent) {
   </div>
 {/if}
 <style>
-.container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 0 16px;
+
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+:global(body){
+  background: var(--clr-page-bg);
 }
 
-.search {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
+/* ================= CONTAINER ================= */
+.container{
+  max-width:1000px;
+  margin:20px auto;
+  padding:0 16px;
 }
 
-/* CARD */
-.card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: white;
-  padding: 16px;
-  padding-right: 50px;
-  border-radius: 14px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.08);
-  position: relative;
+/* ================= SEARCH ================= */
+.search{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--clr-card-border);
+  margin-bottom:20px;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
 }
 
-.left img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
+.search::placeholder{
+  color: var(--clr-subtext);
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #1b8e5a;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+/* ================= CARD ================= */
+.card{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  background: var(--clr-card-bg);
+  padding:16px;
+  padding-right:50px;
+  border-radius:14px;
+  margin-bottom:14px;
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 4px 14px var(--clr-accent-shadow);
+  position:relative;
 }
 
-.info {
-  flex: 1;
+/* ================= PROFILE ================= */
+.left img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
 }
 
-.name { font-weight: 600; }
-.email { font-size: 13px; color: #666; }
-.role { font-size: 12px; color: #1b8e5a; }
-
-/* MENU */
-
-.menu-btn {
-  background: #1b8e5a;
-  color: white;
-  border: none;
-  font-size: 18px;
-  padding: 4px 10px;
-  border-radius: 8px;
-  cursor: pointer;
+.avatar{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background: var(--clr-accent);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
 }
 
-.menu-dropdown {
-  position: absolute;
-  right: 0;
-  top: 36px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.15);
-  min-width: 130px;
-  overflow: hidden;
-  z-index: 10;
+/* ================= TEXT ================= */
+.info{ flex:1; }
+
+.name{
+  color: var(--clr-heading);
+  font-weight:700;
 }
 
-.menu-item {
-  width: 100%;
-  padding: 10px 14px;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
+.email{
+  font-size:13px;
+  color: var(--clr-subtext);
 }
 
-.menu-item:hover {
-  background: #f5f5f5;
+.role{
+  font-size:12px;
+  color: var(--clr-accent);
+  font-weight:600;
 }
 
-.menu-item.delete {
-  color: #e53935;
+/* ================= MENU ================= */
+.menu-btn{
+  background: var(--clr-accent);
+  color:white;
+  border:none;
+  font-size:18px;
+  padding:4px 10px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* DIALOG */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.menu-dropdown{
+  position:absolute;
+  right:0;
+  top:36px;
+  background: var(--clr-card-bg);
+  border-radius:10px;
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 6px 18px var(--clr-accent-shadow);
+  min-width:130px;
+  overflow:hidden;
+  z-index:10;
 }
-
-.dialog {
-  background: white;
-  padding: 24px;
-  border-radius: 14px;
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.dialog-actions .primary {
-  background: #1b8e5a;
-  color: white;
-}
-
-.dialog-actions .delete {
-  background: #e53935;
-  color: white;
-}
-
-.center {
-  text-align: center;
-  padding: 40px;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .card {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.dialog {
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.2);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  animation: dialogFade .18s ease;
-}
-
-@keyframes dialogFade {
-  from { transform: translateY(10px); opacity:0; }
-  to { transform: translateY(0); opacity:1; }
-}
-
-/* header */
-.dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dialog-header h3 {
-  margin: 0;
+.dialog h3{
+  color: var(--clr-heading);
   font-size: 20px;
+  font-weight: 800;
+}
+.menu-item{
+  width:100%;
+  padding:10px 14px;
+  text-align:left;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  color: var(--clr-heading);
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
+.menu-item:hover{
+  background: var(--clr-tab-idle-bg);
 }
 
-/* body */
-.dialog-body {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.menu-item.delete:hover{
+  background: rgba(255,107,107,0.12);
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.field label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #444;
-}
-
-.field input {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-}
-
-.field input:focus {
-  outline: none;
-  border-color: #1b8e5a;
-  box-shadow: 0 0 0 2px rgba(27,142,90,.15);
-}
-
-/* footer */
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.cancel {
-  background: #eee;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.primary {
-  background: linear-gradient(45deg,#1b8e5a,#43a047);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* mobile */
-@media (max-width: 500px) {
-  .dialog {
-    margin: 0 14px;
-  }
-}
 /* ================= OVERLAY ================= */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  animation: fadeIn .2s ease;
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 
 /* ================= DIALOG ================= */
-.dialog {
-  background: white;
-  padding: 24px;
-  border-radius: 16px;
-  width: 92%;
-  max-width: 380px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.18);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  animation: scaleIn .18s ease;
+.dialog{
+  width:100%;
+  max-width:420px;
+  background: var(--clr-card-bg);
+  border-radius:16px;
+  padding:20px;
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 10px 30px var(--clr-accent-shadow);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
 
-/* ================= TITLE ================= */
-.dialog h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #222;
+/* HEADER */
+.dialog-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* ================= MESSAGE ================= */
-.dialog p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.5;
+.dialog-header h3{
+  margin:0;
+  font-size:20px;
+  color: var(--clr-heading);
 }
 
-/* ================= ACTIONS ================= */
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 6px;
+.close-btn{
+  background:none;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+  color: var(--clr-subtext);
 }
 
-/* ================= BUTTON BASE ================= */
-.dialog-actions button {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: .18s ease;
+/* BODY */
+.dialog-body{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 
-/* Cancel button */
-.dialog-actions button:first-child {
-  background: #f1f3f5;
-  color: #333;
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
-.dialog-actions button:first-child:hover {
-  background: #e5e7ea;
+.field label{
+  font-size:13px;
+  font-weight:600;
+  color: var(--clr-heading);
 }
 
-/* Delete button */
-.dialog-actions .delete {
-  background: linear-gradient(45deg,#e53935,#ff5252);
-  color: white;
+.field input{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--clr-card-border);
+  font-size:14px;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
 }
 
-.dialog-actions .delete:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(229,57,53,.35);
+.field input::placeholder{
+  color: var(--clr-subtext);
 }
 
-/* ================= ANIMATIONS ================= */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.field input:focus{
+  outline:none;
+  border-color: var(--clr-accent);
+  box-shadow:0 0 0 2px var(--clr-accent-shadow);
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* ================= BUTTONS ================= */
+.dialog-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+.cancel{
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.primary{
+  background: var(--grad);
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* DELETE BUTTON */
+.delete{
+  background: linear-gradient(135deg,#e53935,#ff5252);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.delete:hover{
+  box-shadow:0 6px 14px rgba(229,57,53,.35);
+}
+
+/* ================= TEXT FIX ================= */
+.dialog p{
+  color: var(--clr-subtext);
+}
+
+.dialog strong{
+  color: var(--clr-heading);
+}
+
+/* ================= CENTER ================= */
+.center{
+  text-align:center;
+  padding:40px;
+  color: var(--clr-subtext);
 }
 
 /* ================= MOBILE ================= */
-@media (max-width: 480px) {
-  .dialog {
-    padding: 20px;
-    border-radius: 14px;
-  }
-
-  .dialog h3 {
-    font-size: 18px;
-  }
-
-  .dialog p {
-    font-size: 13px;
-  }
-
-  .dialog-actions button {
-    padding: 10px;
-    font-size: 13px;
+@media (max-width:600px){
+  .email{
+    white-space:normal;
+    word-break:break-word;
   }
 }
 
-
-
-@media (max-width: 600px) {
-  .email {
-    white-space: normal;
-    word-break: break-word;
-  }
-}
 </style>

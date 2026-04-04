@@ -212,13 +212,74 @@
 {/if}
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+* {
+  box-sizing: border-box;
+}
+
+:global(body){
+  margin:0;
+  background: var(--clr-page-bg);
+  font-family: system-ui;
+  color: var(--clr-heading);
+}
+
 * {
   box-sizing: border-box;
 }
 
 .page {
   padding: 20px;
-  background: #f5f7fb;
+  background: var(--clr-page-bg);
   min-height: 100vh;
 }
 
@@ -231,19 +292,25 @@
 }
 
 .search-box input {
-  width: 100%;               /* 🔥 FIXED */
+  width: 100%;
   max-width: 420px;
   padding: 12px 16px;
   border-radius: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--clr-card-border);
   font-size: 14px;
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-heading);
   transition: 0.2s ease;
+}
+
+.search-box input::placeholder {
+  color: var(--clr-subtext);
 }
 
 .search-box input:focus {
   outline: none;
-  border-color: #1fae4b;
-  box-shadow: 0 0 0 3px rgba(31,174,75,.1);
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px var(--clr-accent-shadow);
 }
 
 /* ================= LIST ================= */
@@ -257,35 +324,37 @@
 /* ================= CARD ================= */
 
 .card {
-  background: white;
+  background: var(--clr-card-bg);
+  border: 1px solid var(--clr-card-border);
   border-radius: 18px;
   padding: 16px;
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  box-shadow: 0 6px 18px var(--clr-accent-shadow);
   position: relative;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 26px rgba(0,0,0,.12);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px var(--clr-accent-shadow2);
 }
 
-/* ================= IMAGE (LEFT ALWAYS) ================= */
+/* ================= IMAGE ================= */
 
 .image {
   width: 110px;
   height: 85px;
   border-radius: 12px;
   overflow: hidden;
-  background: #e0f2e9;
-  flex-shrink: 0;            /* 🔥 IMPORTANT */
+  background: var(--clr-icon-bg);
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 26px;
+  color: var(--clr-accent);
 }
 
 .image img {
@@ -298,12 +367,13 @@
 
 .content {
   flex: 1;
-  min-width: 0;              /* 🔥 PREVENT OVERFLOW */
+  min-width: 0;
 }
 
 .title {
   font-size: 17px;
   font-weight: 700;
+  color: var(--clr-heading);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -311,12 +381,12 @@
 
 .description {
   font-size: 13px;
-  color: #666;
+  color: var(--clr-subtext);
   margin-top: 6px;
   line-height: 1.5;
 
   display: -webkit-box;
-  line-clamp: 2;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -329,8 +399,8 @@
 }
 
 .badges span {
-  background: rgba(31,174,75,.12);
-  color: #1fae4b;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-accent);
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 20px;
@@ -340,7 +410,7 @@
 
 .created {
   font-size: 11px;
-  color: #999;
+  color: var(--clr-subtext);
   margin-top: 8px;
 }
 
@@ -354,8 +424,8 @@
 
 .menu-btn {
   border: none;
-  background: rgba(255,255,255,.9);
-  color: #1fae4b;
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-accent);
   font-size: 16px;
   cursor: pointer;
   padding: 6px 8px;
@@ -364,17 +434,18 @@
 }
 
 .menu-btn:hover {
-  background: #1fae4b;
-  color: white;
+  background: var(--clr-accent);
+  color: #000;
 }
 
 .popup-menu {
   position: absolute;
   right: 0;
   top: 36px;
-  background: white;
+  background: var(--clr-card-bg);
+  border: 1px solid var(--clr-card-border);
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  box-shadow: 0 10px 24px var(--clr-accent-shadow);
   min-width: 150px;
   padding: 6px 0;
   z-index: 100;
@@ -388,14 +459,15 @@
   background: none;
   cursor: pointer;
   font-size: 13px;
+  color: var(--clr-heading);
 }
 
 .popup-menu button:hover {
-  background: #f5f5f5;
+  background: var(--clr-view-btn-hover);
 }
 
 .delete-item {
-  color: #e53935;
+  color: #ff6b6b;
 }
 
 /* ================= DIALOG ================= */
@@ -411,17 +483,19 @@
 .overlay-bg {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,.4);
+  background: rgba(0,0,0,.6);
   border: none;
 }
 
 .dialog {
-  background: white;
+  background: var(--clr-card-bg);
+  border: 1px solid var(--clr-card-border);
   padding: 22px;
   border-radius: 14px;
   width: 320px;
   z-index: 1000;
   text-align: center;
+  color: var(--clr-heading);
 }
 
 .dialog-actions {
@@ -431,14 +505,25 @@
   margin-top: 14px;
 }
 
-.danger {
-  background: red;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
+.dialog button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-heading);
 }
 
-/* ================= MOBILE (IMAGE STILL LEFT) ================= */
+.dialog button:hover {
+  background: var(--clr-view-btn-hover);
+}
+
+.danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+/* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
 
@@ -447,7 +532,7 @@
   }
 
   .card {
-    flex-direction: row;   /* 🔥 KEEP HORIZONTAL */
+    flex-direction: row;
     gap: 12px;
   }
 

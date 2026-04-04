@@ -318,23 +318,77 @@ async function enrollWithRazorpay(course: any) {
   </section>
 
 </div>
-
 <style>
+/* =====================================================
+   🎨 THEME — change colors here, nowhere else
+   ===================================================== */
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+/* =====================================================
+   PAGE
+   ===================================================== */
 .page {
   min-height: 100vh;
-  background: #f5f7fb;
+  background: var(--clr-page-bg);
+  color: var(--clr-heading);
 }
 
-/* ================= APPBAR ================= */
-
-
-/* ================= TABS ================= */
+/* =====================================================
+   TABS — mobile
+   ===================================================== */
 .tabs {
   display: flex;
   overflow-x: auto;
   padding: 12px 10px 6px;
-  background: white;
-  
+  background: var(--clr-tab-bar-bg);
   gap: 6px;
 }
 
@@ -350,7 +404,7 @@ async function enrollWithRazorpay(course: any) {
 }
 
 .tab.active {
-  color: #1fae4b;
+  color: var(--clr-accent);
   font-weight: 600;
 }
 
@@ -361,11 +415,13 @@ async function enrollWithRazorpay(course: any) {
   left: 0;
   width: 100%;
   height: 3px;
-  background: #1fae4b;
+  background: var(--clr-accent);
   border-radius: 4px;
 }
 
-/* ================= BODY ================= */
+/* =====================================================
+   CONTENT AREA
+   ===================================================== */
 .content {
   padding: 16px;
   max-width: 920px;
@@ -377,13 +433,16 @@ async function enrollWithRazorpay(course: any) {
   padding: 40px;
 }
 
-/* ================= CARD ================= */
+/* =====================================================
+   CARD — mobile
+   ===================================================== */
 .card {
-  background: white;
-  padding: 16px;
+  background: var(--clr-card-bg);
+  border:1px solid var(--clr-card-border);
+   padding: 16px;
   border-radius: 16px;
   margin-bottom: 14px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .card-top {
@@ -392,7 +451,7 @@ async function enrollWithRazorpay(course: any) {
 }
 
 .icon {
-  background: #eaf3ff;
+  background: var(--clr-icon-bg);
   padding: 10px;
   border-radius: 10px;
   font-size: 20px;
@@ -402,12 +461,13 @@ async function enrollWithRazorpay(course: any) {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  color: var(--clr-heading);
 }
 
 .text p {
   margin: 4px 0 0;
   font-size: 13px;
-  color: grey;
+  color: var(--clr-subtext);
 }
 
 .card-actions {
@@ -420,14 +480,14 @@ async function enrollWithRazorpay(course: any) {
 .view {
   background: none;
   border: none;
-  color: #333;
+  color: var(--clr-view-btn-fg);
   cursor: pointer;
   font-weight: 500;
 }
 
 .enroll {
-  background: #11ba66;
-  color: white;
+  background: var(--clr-accent);
+  color: rgb(9, 9, 9);
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
@@ -435,273 +495,221 @@ async function enrollWithRazorpay(course: any) {
   cursor: pointer;
 }
 
-/* MOBILE OPTIMIZATION */
+/* hidden on mobile */
+.course-img  { display: none; }
+.course-desc { display: none; }
+.price       { display: none; }
+
+/* =====================================================
+   SKELETON
+   ===================================================== */
+.skeleton-wrapper {
+  padding: 24px;
+}
+
+.skeleton-card {
+  height: 120px;
+  background: linear-gradient(
+    90deg,
+    var(--clr-shimmer-1) 25%,
+    var(--clr-shimmer-2) 37%,
+    var(--clr-shimmer-1) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+@keyframes shimmer {
+  0%   { background-position:  100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
 @media (max-width: 600px) {
+  .content { padding: 14px; }
+}
+
+/* =====================================================
+   DESKTOP  ≥ 1024px
+   ===================================================== */
+@media (min-width: 1024px) {
+
+  .tabs {
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 12px;
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    background: var(--clr-tab-idle-bg);
+    color: var(--clr-tab-idle-fg);
+    white-space: nowrap;
+    transition: 0.25s;
+    flex: 0 0 auto;
+  }
+
+  .tab.active {
+    background: var(--grad);
+    color: white;
+    box-shadow: 0 6px 16px var(--clr-accent-shadow);
+  }
+
+  .tab:hover { transform: translateY(-2px); }
+  .tab.active::after { display: none; }
+
   .content {
-    padding: 14px;
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 60px 70px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .card {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    background: var(--clr-card-bg);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s ease;
+    margin-bottom: 0;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
+  }
+
+  .course-img {
+    display: block;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+  }
+
+  .card-top {
+    padding: 22px;
+    gap: 14px;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border-radius: 14px;
+    background: var(--grad);
+    color: white;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .text h3 {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .text p {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .course-desc {
+    display: -webkit-box;
+    font-size: 15px;
+    color: var(--clr-subtext);
+    padding: 0 22px;
+    line-height: 1.6;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 46px;
+  }
+
+  .card-actions {
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    justify-content: flex-start;
+  }
+
+  .price {
+    display: block;
+    font-size: 24px;
+    font-weight: 800;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: auto;
+  }
+
+  .view {
+    background: var(--clr-view-btn-bg);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--clr-view-btn-fg);
+    transition: 0.25s;
+  }
+
+  .view:hover { background: var(--clr-view-btn-hover); }
+
+  .enroll {
+    background: var(--grad);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px var(--clr-accent-shadow);
+    transition: 0.25s;
+  }
+
+  .enroll:hover {
+    transform: scale(1.06);
+    box-shadow: 0 16px 40px var(--clr-accent-shadow2);
+  }
+
+  .skeleton-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding: 0;
+  }
+
+  .skeleton-card {
+    height: 300px;
+    border-radius: 22px;
+    margin-bottom: 0;
+  }
+
+  .center {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px;
+    font-size: 18px;
   }
 }
-.course-img{
-  display:none;
-}
-
-.course-desc{
-  display:none;
-}
-
-.price{
-  display:none;
-}
-@media (min-width:1024px){
-
-/* GRID */
-
-/* ================= TABS ================= */
-.tabs{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-
-  padding:14px 12px;
-
-  background:white;
-
-  overflow-x:auto;
-}
-.tab{
-  border:none;
-
-  padding:10px 18px;
-
-  font-size:14px;
-  font-weight:600;
-
-  border-radius:999px;
-
-  background:#f3f4f6;
-
-  color:#555;
-
-  cursor:pointer;
-
-  white-space:nowrap;
-
-  transition:.25s;
-
-  flex:0 0 auto;
-}
-.tab.active{
-  background:linear-gradient(135deg,#20559b,#11ba66);
-  color:white;
-
-  box-shadow:0 6px 16px rgba(17,186,102,.35);
-}
-.tab:hover{
-  transform:translateY(-2px);
-}
-.tab.active::after{
-  display:none;
-}
-.content{
-  width:100%;
-  max-width:1400px;
-  margin:auto;
-
-  padding:60px 70px;
-
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:40px;
-}
-
-/* CARD */
-
-.card{
-  padding:0;
-  overflow:hidden;
-  border-radius:22px;
-
-  display:flex;
-  flex-direction:column;
-
-  background:white;
-
-  box-shadow:0 12px 30px rgba(0,0,0,.08);
-
-  transition:all .35s ease;
-}
-
-/* HOVER */
-
-.card:hover{
-  transform:translateY(-10px);
-  box-shadow:0 30px 70px rgba(0,0,0,.18);
-}
-
-/* IMAGE */
-
-.course-img{
-  display: block;
-  width:100%;
-  height:230px;
-  object-fit:cover;
-}
-
-/* HEADER */
-
-.card-top{
-  padding:22px;
-  display:flex;
-  gap:14px;
-}
-
-/* ICON */
-
-.icon{
-  width:48px;
-  height:48px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:22px;
-
-  border-radius:14px;
-
-  background:linear-gradient(135deg,#20559b,#11ba66);
-  color:white;
-
-  flex-shrink:0;
-}
-
-/* TITLE */
-
-.text h3{
-  font-size:21px;
-  font-weight:700;
-  line-height:1.4;
-  margin:0;
-}
-
-.text p{
-  font-size:14px;
-  color:#6b7280;
-  margin-top:4px;
-}
-
-/* DESCRIPTION */
-
-.course-desc{
-  font-size:15px;
-  color:#6b7280;
-
-  padding:0 22px;
-
-  line-height:1.6;
-
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-
-  min-height:46px;
-}
-
-/* ACTION AREA */
-
-.card-actions{
-  padding:22px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-
-  margin-top:auto;
-}
-
-/* PRICE */
-
-.price{
-  display: block;
-  font-size:24px;
-  font-weight:800;
-
-  background:linear-gradient(135deg,#20559b,#11ba66);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  margin-right:auto;
-}
-
-/* VIEW BUTTON */
-
-.view{
-  background:#f3f4f6;
-  border:none;
-
-  padding:10px 16px;
-
-  border-radius:10px;
-
-  font-weight:600;
-  cursor:pointer;
-
-  transition:.25s;
-}
-
-.view:hover{
-  background:#e5e7eb;
-}
-
-/* ENROLL BUTTON */
-
-.enroll{
-  background:linear-gradient(135deg,#20559b,#11ba66);
-  color:white;
-
-  border:none;
-
-  padding:12px 22px;
-
-  border-radius:14px;
-
-  font-weight:700;
-  font-size:15px;
-
-  cursor:pointer;
-
-  box-shadow:0 10px 25px rgba(17,186,102,.35);
-
-  transition:.25s;
-}
-
-.enroll:hover{
-  transform:scale(1.06);
-  box-shadow:0 16px 40px rgba(17,186,102,.45);
-}
-
-/* SKELETON */
-
-.skeleton-wrapper{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:40px;
-}
-
-.skeleton-card{
-  height:300px;
-  border-radius:22px;
-}
-
-/* EMPTY */
-
-.center{
-  grid-column:1/-1;
-  text-align:center;
-  padding:80px;
-  font-size:18px;
-}
-
-}
-
 </style>

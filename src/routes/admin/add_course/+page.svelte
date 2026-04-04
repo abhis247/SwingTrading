@@ -248,23 +248,236 @@
 </div>
 
 <style>
-.form{max-width:900px;margin:auto;display:flex;flex-direction:column;gap:20px}
-.card{background:white;padding:18px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:12px}
-input,textarea,select{padding:12px;border-radius:10px;border:1px solid #ddd;font-size:14px}
-textarea{min-height:80px}
-.column{display:flex;flex-direction:column;gap:12px}
-.banner-card img{width:100%;height:220px;object-fit:cover;border-radius:12px}
-.banner-placeholder{height:200px;background:#f4f4f4;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#666}
-.subject{background:#fafafa;padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:10px}
-.subject-head{display:flex;justify-content:space-between;align-items:center}
-.video{background:white;padding:12px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:8px}
-.video-head{display:flex;justify-content:space-between}
-.section-header{display:flex;justify-content:space-between;align-items:center}
-.add-btn{background:#1b8e5a;color:white;border:none;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer}
-.delete-btn{background:#e53935;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
-.preview{display:flex;gap:8px;align-items:center;font-size:13px}
-.submit{background:linear-gradient(45deg,#1b8e5a,#43a047);color:white;padding:16px;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
+:global(:root){
 
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
 
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
 
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+:global(body){
+  background: var(--clr-page-bg);
+}
+
+/* FORM */
+.form{
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* CARD */
+.card{
+  background: var(--clr-card-bg);
+  padding:18px;
+  border-radius:14px;
+  border:1px solid var(--clr-card-border);
+  box-shadow:0 6px 18px var(--clr-accent-shadow);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* INPUT */
+input,textarea,select{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--clr-card-border);
+  font-size:14px;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
+}
+
+textarea{
+  min-height:80px;
+}
+
+/* COLUMN */
+.column{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* BANNER */
+.banner-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.banner-placeholder{
+  height:200px;
+  background: var(--clr-tab-idle-bg);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  color: var(--clr-subtext);
+}
+
+/* SUBJECT */
+.subject{
+  background: var(--clr-card-bg);
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--clr-card-border);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.subject-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* VIDEO */
+.video{
+  background: var(--clr-tab-idle-bg);
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 4px 10px var(--clr-accent-shadow);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.video-head{
+  display:flex;
+  justify-content:space-between;
+}
+
+/* HEADERS */
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* BUTTONS */
+.add-btn{
+  background: var(--clr-accent);
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.delete-btn{
+  background:#e53935; /* no root */
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.preview{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-size:13px;
+  color: var(--clr-subtext);
+}
+
+/* SUBMIT */
+.submit{
+  background: var(--grad);
+  color:#fff;
+  padding:16px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 18px var(--clr-accent-shadow2);
+}
+/* ===== TEXT VISIBILITY FIX ===== */
+
+/* placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: var(--clr-subtext);
+  opacity: 1;
+}
+
+/* select text */
+select {
+  color: var(--clr-heading);
+}
+
+/* headings */
+h3, h4, h5 {
+  color: var(--clr-heading);
+}
+
+/* checkbox label */
+.preview {
+  color: var(--clr-heading);
+}
+
+/* focus state */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+}
+
+/* cursor color */
+input, textarea {
+  caret-color: var(--clr-accent);
+}
 </style>

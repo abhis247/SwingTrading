@@ -235,44 +235,102 @@ function openSnackbar(
 {/if}
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+:global(body){
+  background: var(--clr-page-bg);
+}
+
+/* PAGE */
 .page {
   padding:8px;
   min-height: 100vh;
-  background: #f6f8fb;
+  background: var(--clr-page-bg);
 }
 
-
-
+/* ERROR */
 .error {
-  background: #ffe5e5;
-  color: #c62828;
+  background: rgba(255,0,0,0.15);
+  color: #ff6b6b;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 12px;
   text-align: center;
 }
 
+/* FORM */
 .form-container {
   max-width: 700px;
   margin: auto;
-  background: white;
+  background: var(--clr-card-bg);
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  border:1px solid var(--clr-card-border);
+  box-shadow: 0 10px 30px var(--clr-accent-shadow);
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+/* BANNER */
 .banner-box {
   position: relative;
   height: 220px;
   border-radius: 16px;
   overflow: hidden;
-  background: #e9eef5;
+  background: var(--clr-tab-idle-bg);
   display: flex;
   align-items: center;
   justify-content: center;
+  border:1px solid var(--clr-card-border);
 }
 
 .banner-box img {
@@ -281,65 +339,98 @@ function openSnackbar(
   object-fit: cover;
 }
 
+/* PLACEHOLDER */
 .placeholder {
-  color: #777;
+  color: var(--clr-subtext);
   font-size: 14px;
 }
 
+/* UPLOAD BUTTON */
 .upload-btn {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: #1b8e5a;
+  background: var(--clr-accent);
   color: white;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 13px;
   cursor: pointer;
+  box-shadow:0 4px 10px var(--clr-accent-shadow);
 }
 
 .upload-btn input {
   display: none;
 }
 
+/* INPUT */
 input,
 textarea,
 select {
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--clr-card-border);
   font-size: 14px;
   width: 100%;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
 }
 
+/* PLACEHOLDER */
+input::placeholder,
+textarea::placeholder{
+  color: var(--clr-subtext);
+  opacity:1;
+}
+
+/* FOCUS */
+input:focus,
+textarea:focus,
+select:focus{
+  outline:none;
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 2px var(--clr-accent-shadow);
+}
+
+/* CURSOR */
+input, textarea{
+  caret-color: var(--clr-accent);
+}
+
+/* TEXTAREA */
 textarea {
   min-height: 90px;
   resize: vertical;
 }
 
+/* GRID */
 .grid {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
+/* BUTTON */
 .update-btn {
-  background: #1b8e5a;
+  background: var(--grad);
   color: white;
   padding: 14px;
   border: none;
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow:0 6px 18px var(--clr-accent-shadow2);
 }
 
 .update-btn:disabled {
-  background: #999;
+  opacity:.6;
   cursor: not-allowed;
 }
 
+/* LOADER */
 .loader {
   text-align: center;
   padding: 100px 0;
+  color: var(--clr-subtext);
 }
 </style>

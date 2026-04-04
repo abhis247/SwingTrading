@@ -5,6 +5,7 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
 
+  import AppBar from "$lib/AppBar1.svelte";
   let player: any = null;
   let courseId: string | undefined;
 
@@ -140,7 +141,7 @@
     return match ? match[1] : "";
   }
 </script>
-
+  <AppBar   title="Course Details" showBack={true} />
 {#if loading}
   <div class="center">Loading course...</div>
 {:else}
@@ -191,8 +192,58 @@
 {/if}
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
 :global(body) {
-  background: #f8fafc;
+  background: var(--clr-page-bg);
   font-family: system-ui, sans-serif;
 }
 
@@ -201,10 +252,11 @@
   aspect-ratio: 16/9;
   background: black;
   border-radius: 18px;
-  position: relative; 
+  margin-top: 16px;
+  position: relative;
   overflow: hidden;
   margin-bottom: 24px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.15);
+  box-shadow: var(--clr-accent-shadow2);
 }
 
 #youtube-player {
@@ -214,22 +266,25 @@
 
 /* COURSE */
 .course-card {
-  background: white;
+  background:var(--clr-card-bg); /* no root equivalent */
   padding: 20px;
   border-radius: 18px;
   margin-bottom: 24px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+  box-shadow: var(--clr-accent-shadow); /* closest match */
 }
 
 .course-card h1 {
   margin-bottom: 8px;
+  color: var(--clr-heading);
 }
 
 .description {
-  opacity: .8;
+  opacity: 0.8;
   margin-bottom: 12px;
+  color: var(--clr-subtext);
 }
 
+/* META */
 .meta {
   display: flex;
   flex-wrap: wrap;
@@ -237,29 +292,32 @@
 }
 
 .meta span {
-  background: #f1f5f9;
+  background: var(--clr-tab-idle-bg); /* closest match */
+  color: var(--clr-subtext);
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 13px;
 }
 
+/* PRICE */
 .price {
-  background: #dcfce7 !important;
+  background: #dcfce7;
   color: #16a34a;
   font-weight: bold;
 }
 
 /* SUBJECT */
 .subject {
-  background: white;
+  background: var(--clr-card-bg);
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+  box-shadow: var(--clr-accent-shadow);
 }
 
 .subject h3 {
   margin-bottom: 10px;
+  color: var(--clr-heading);
 }
 
 /* LECTURES */
@@ -269,7 +327,8 @@
   padding: 12px;
   margin-bottom: 8px;
   border-radius: 8px;
-  background: #f8fafc;
+  background: var(--clr-tab-idle-bg); /* closest match */
+  color: var(--clr-subtext);
   border: none;
   text-align: left;
   cursor: pointer;
@@ -277,20 +336,23 @@
 }
 
 .lecture:hover {
-  background: #e2e8f0;
+  background: var(--clr-view-btn-hover);
 }
 
 .lecture.active {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--grad);
+  color: #fff;
   font-weight: 600;
 }
 
+/* LOADING */
 .center {
   text-align: center;
   padding: 60px;
   font-size: 18px;
+  color: var(--clr-subtext);
 }
+
 .yt-block-top {
   position:absolute;
   top:0;

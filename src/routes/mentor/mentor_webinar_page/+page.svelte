@@ -258,28 +258,84 @@ let deleteId: string | null = null;
 {/if}
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+:global(body){
+  margin:0;
+  background: var(--clr-page-bg);
+  font-family: system-ui;
+  color: var(--clr-heading);
+}
+
 .page {
   max-width: 1000px;
   margin: auto;
   padding: 30px 20px;
-  background: #f5f7fb;
   min-height: 100vh;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
 .create-btn {
   margin-bottom: 18px;
   padding: 12px 18px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #1fae4b, #28c76f);
-  color: white;
+  background: var(--grad);
+  color: var(--clr-heading);
   border: none;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(31,174,75,.25);
+  box-shadow: 0 6px 16px var(--clr-accent-shadow);
 }
 
-/* SEARCH */
+/* ================= SEARCH ================= */
 .search-box {
   margin-bottom: 24px;
   display: flex;
@@ -291,41 +347,44 @@ let deleteId: string | null = null;
   max-width: 460px;
   padding: 12px 16px;
   border-radius: 14px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--clr-card-border);
+  background: var(--clr-card-bg);
+  color: var(--clr-heading);
 }
 
-/* LIST */
+/* ================= LIST ================= */
 .list {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card {
-  background: white;
+  background: var(--clr-card-bg);
   border-radius: 18px;
   padding: 16px;
   display: flex;
   gap: 16px;
   align-items: center;
   position: relative;
-  box-shadow: 0 6px 18px rgba(0,0,0,.05);
+  border: 1px solid var(--clr-card-border);
+  box-shadow: 0 6px 18px var(--clr-accent-shadow);
   transition: .2s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+  box-shadow: 0 12px 28px var(--clr-accent-shadow2);
 }
 
-/* IMAGE */
+/* ================= IMAGE ================= */
 .image {
   width: 95px;
   height: 95px;
   border-radius: 14px;
   overflow: hidden;
-  background: #e8f5ee;
+  background: var(--clr-icon-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +398,7 @@ let deleteId: string | null = null;
   object-fit: cover;
 }
 
-/* CONTENT */
+/* ================= CONTENT ================= */
 .content {
   flex: 1;
   padding-right: 55px;
@@ -348,26 +407,28 @@ let deleteId: string | null = null;
 .title {
   font-weight: 600;
   font-size: 16px;
+  color: var(--clr-heading);
 }
 
 .desc {
   font-size: 13px;
   margin-top: 4px;
-  color: #666;
+  color: var(--clr-subtext);
 }
 
 .schedule {
   margin-top: 4px;
   font-size: 12px;
-  color: #888;
+  color: var(--clr-subtext);
 }
 
 .countdown {
   margin-top: 4px;
   font-size: 12px;
-  color: #ff9800;
+  color: var(--clr-accent);
 }
 
+/* ================= BADGES ================= */
 .badges {
   margin-top: 8px;
   display: flex;
@@ -379,16 +440,27 @@ let deleteId: string | null = null;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 11px;
-  background: rgba(31,174,75,.1);
-  color: #1fae4b;
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-accent);
 }
 
-/* STATUS */
-.upcoming { background: #fff3e0; color: #fb8c00; }
-.live { background: #e8f5e9; color: #2e7d32; }
-.completed { background: #eeeeee; color: #777; }
+/* STATUS COLORS */
+.upcoming {
+  background: rgba(255,179,0,.1);
+  color: #ffb300;
+}
 
-/* MENU */
+.live {
+  background: rgba(0,255,157,.1);
+  color: #00ff9d;
+}
+
+.completed {
+  background: #333;
+  color: #aaa;
+}
+
+/* ================= MENU ================= */
 .menu-wrapper {
   position: absolute;
   top: 12px;
@@ -397,8 +469,8 @@ let deleteId: string | null = null;
 
 .menu-btn {
   border: none;
-  background: rgba(31,174,75,.15);
-  color: #1fae4b;
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-accent);
   font-size: 18px;
   padding: 6px 10px;
   border-radius: 10px;
@@ -409,9 +481,10 @@ let deleteId: string | null = null;
   position: absolute;
   right: 0;
   top: 36px;
-  background: white;
+  background: var(--clr-card-bg);
   border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+  border: 1px solid var(--clr-card-border);
+  box-shadow: 0 12px 28px var(--clr-accent-shadow);
   min-width: 160px;
   padding: 6px 0;
 }
@@ -423,17 +496,78 @@ let deleteId: string | null = null;
   border: none;
   background: none;
   cursor: pointer;
+  color: var(--clr-heading);
 }
 
 .popup-menu button:hover {
-  background: #f5f5f5;
+  background: var(--clr-view-btn-hover);
 }
 
 .delete-item {
-  color: #e53935;
+  color: #ff4d4d;
 }
 
-/* RESPONSIVE */
+/* ================= DIALOG ================= */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.dialog-box {
+  background: var(--clr-card-bg);
+  padding: 28px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 380px;
+  border: 1px solid var(--clr-card-border);
+  box-shadow: 0 20px 50px var(--clr-accent-shadow2);
+  text-align: center;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--clr-heading);
+}
+
+.dialog-text {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--clr-subtext);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+  justify-content: center;
+}
+
+.cancel-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--clr-card-border);
+  background: var(--clr-view-btn-bg);
+  color: var(--clr-heading);
+  cursor: pointer;
+}
+
+.confirm-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg,#ff3b3b,#ff6b6b);
+  color: white;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .card {
     flex-direction: row;
@@ -447,74 +581,5 @@ let deleteId: string | null = null;
   .content {
     padding-right: 50px;
   }
-}
-/* ================= DELETE DIALOG ================= */
-
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  animation: fadeIn .2s ease;
-}
-
-.dialog-box {
-  background: white;
-  padding: 28px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 380px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.2);
-  text-align: center;
-  animation: slideUp .2s ease;
-}
-
-.dialog-title {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.dialog-text {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #666;
-}
-
-.dialog-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 22px;
-  justify-content: center;
-}
-
-.cancel-btn {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  background: white;
-  cursor: pointer;
-}
-
-.confirm-btn {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: none;
-  background: #e53935;
-  color: white;
-  cursor: pointer;
-}
-
-.confirm-btn:hover {
-  background: #c62828;
-}
-
-/* Animations */
-
-@keyframes slideUp {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
 }
 </style>

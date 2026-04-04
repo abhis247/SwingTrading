@@ -58,16 +58,75 @@
 </div>
 
 <style>
+:global(:root){
+
+  /* ================= APPBAR ================= */
+  --appbar-bg: linear-gradient(135deg,#c38e1d,#6f5a12);
+  --appbar-text:#f5d060;
+
+  /* ================= PRIMARY ================= */
+  --clr-primary-from:#7a5400;
+  --clr-primary-to:#d4a017;
+
+  /* ================= ACCENT ================= */
+  --clr-accent:#d4a017;
+  --clr-accent-dark:#b88a10;
+
+  /* ================= SHADOW ================= */
+  --clr-accent-shadow:rgba(212,160,23,0.3);
+  --clr-accent-shadow2:rgba(212,160,23,0.45);
+
+  /* ================= BACKGROUND ================= */
+  --clr-page-bg:linear-gradient(180deg,#0a0800,#120d00);
+
+  /* 🔥 MAIN FIX (VERY IMPORTANT) */
+  --clr-card-bg:#2b1f06;   /* brighter → visible */
+  --clr-card-border:rgba(212,160,23,0.3);
+
+  --clr-tab-bar-bg:#120d00;
+
+  /* ================= TAB ================= */
+  --clr-tab-idle-bg:#35280a;
+  --clr-tab-idle-fg:#c9a84d;
+
+  /* ================= ICON ================= */
+  --clr-icon-bg:#35280a;
+
+  /* ================= TEXT ================= */
+  --clr-heading:#fff2c2;   /* brighter for readability */
+  --clr-subtext:#c9a84d;
+
+  /* ================= BUTTON ================= */
+  --clr-view-btn-bg:#35280a;
+  --clr-view-btn-hover:#4a390f;
+  --clr-view-btn-fg:#f5e6c0;
+
+  /* ================= SKELETON ================= */
+  --clr-shimmer-1:#35280a;
+  --clr-shimmer-2:#4a390f;
+
+  /* ================= GRADIENT ================= */
+  --grad:linear-gradient(135deg,var(--clr-primary-from),var(--clr-primary-to));
+}
+
+
+
+
+:global(body) {
+  background: var(--clr-page-bg);
+  font-family: system-ui;
+}
+
+/* PAGE */
 .page {
   min-height: 100vh;
-  background: #f5f7fb;
-  font-family: system-ui;
+  background: var(--clr-page-bg);
 }
 
 /* ================= APPBAR ================= */
 .appbar {
-  background: #1fae4b;
-  color: white;
+  background: var(--grad); /* replaced green */
+  color: var(--appbar-text);
   padding: 16px;
   position: relative;
   text-align: center;
@@ -80,7 +139,7 @@
   background: none;
   border: none;
   font-size: 22px;
-  color: white;
+  color: var(--appbar-text);
   cursor: pointer;
 }
 
@@ -103,27 +162,27 @@
 .logo {
   height: 120px;
   width: 120px;
-  background: #1fae4b;
+  background: var(--clr-accent);
   border-radius: 24px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 52px;
-  color: white;
+  color: #fff;
   font-weight: bold;
 }
 
 .est {
   margin-top: 8px;
-  color: #777;
+  color: var(--clr-subtext);
 }
 
 /* SECTION TITLE */
 .section-title {
   font-size: 15px;
   font-weight: 600;
-  color: #777;
+  color: var(--clr-subtext);
   margin: 20px 0 10px;
 }
 
@@ -132,7 +191,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #f1f3f5;
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-subtext);
   padding: 14px;
   border-radius: 14px;
   margin-bottom: 12px;
@@ -145,13 +205,14 @@
 .label {
   margin: 0;
   font-size: 13px;
-  color: #888;
+  color: var(--clr-subtext);
 }
 
 .value {
   margin: 2px 0 0;
   font-weight: 600;
   font-size: 16px;
+  color: var(--clr-heading);
 }
 
 /* MESSAGE BOX */
@@ -160,8 +221,9 @@
   height: 110px;
   padding: 14px;
   border-radius: 12px;
-  border: none;
-  background: #f1f3f5;
+  border: 1px solid var(--clr-card-border);
+  background: var(--clr-tab-idle-bg);
+  color: var(--clr-heading);
   resize: none;
   font-size: 14px;
 }
@@ -171,12 +233,13 @@
   width: 100%;
   margin-top: 18px;
   height: 48px;
-  background: #1fae4b;
-  color: white;
+  background: var(--grad);
+  color: #fff;
   border: none;
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 6px 18px var(--clr-accent-shadow2);
 }
 
 /* RESPONSIVE */
