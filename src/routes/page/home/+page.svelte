@@ -6,7 +6,7 @@
   import { signOut } from "firebase/auth";
   import { onDestroy } from "svelte";
   import { MessageCircle } from "lucide-svelte";
-
+  import InstallButton from '$lib/InstallButton.svelte';
   let myCoursesLoaded = false;
   let user: any = null;
   let showMenu = false;
@@ -327,7 +327,8 @@ onDestroy(() => {
       </div>
     {/if}
   </div>
-
+<!-- ✅ INSTALL BUTTON BELOW HEADER -->
+<InstallButton />
 
 
   <section class="section">
