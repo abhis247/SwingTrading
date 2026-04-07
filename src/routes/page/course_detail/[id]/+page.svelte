@@ -354,6 +354,28 @@
   margin: 14px 0;
 }
 
+h1 {
+  color: var(--clr-heading);
+}
+
+h3 {
+  color: var(--clr-heading);
+}
+p {
+  color: var(--clr-subtext);
+}
+
+.subject-title {
+  color: var(--clr-heading);
+}
+.video {
+  color: var(--clr-subtext);
+}
+.subject-title span {
+  color: var(--clr-subtext);
+  font-size: 12px;
+}
+
 .chip {
   background: var(--clr-tab-idle-bg);
   color: var(--clr-subtext);
