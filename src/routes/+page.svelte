@@ -13,9 +13,9 @@
   height: 120px;
   background: linear-gradient(
     90deg,
-    #f3f4f6 25%,
-    #e5e7eb 37%,
-    #f3f4f6 63%
+    #093793 25%,
+    #092d76 37%,
+    #07399d 63%
   );
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
