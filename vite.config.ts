@@ -16,11 +16,11 @@ export default defineConfig({
       },
 
       manifest: {
-        name: 'My App',
+        name: 'Swing trading',
         short_name: 'App',
         description: 'My PWA App',
-        theme_color: '#000000',
-        background_color: '#ffffff',
+        theme_color: '#d4a017',       // 🟡 GOLD (status bar)
+        background_color: '#0a0800',  // ⚫ DARK (no white flash)
         display: 'standalone',
         start_url: '/',
 
