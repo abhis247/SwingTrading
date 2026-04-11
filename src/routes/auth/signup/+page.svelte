@@ -16,6 +16,7 @@
   let emailError = "";
   let passwordError = "";
 
+  let phoneValid = false;
   /* 🔥 Snackbar */
   let toastMessage = "";
   let showToast = false;
@@ -64,16 +65,18 @@
     }
   }
 $: {
-  if (phone.length === 0) {
-    phoneError = "";
-  } 
-  else if (phone.length < 10) {
-  phoneError = "Enter valid 10 digit phone number";
-}
-  else {
-    phoneError = validatePhone(phone)
-      ? ""
-      : "Enter valid mobile number";
+  if (phoneValid) {
+    if (phone.length === 0) {
+      phoneError = "Phone number is required";
+    } 
+    else if (phone.length < 10) {
+      phoneError = "Enter valid 10 digit phone number";
+    }
+    else {
+      phoneError = validatePhone(phone)
+        ? ""
+        : "Enter valid mobile number";
+    }
   }
 }
   function validateForm(): boolean {
@@ -82,7 +85,7 @@ $: {
     if (!password) passwordError = "Password is required";
     if (!phone.trim()) phoneError = "Phone number is required";
 
-    return !nameError && !emailError && !passwordError;
+    return !nameError && !emailError && !passwordError && !phoneError; 
   }
 
   /* ================= EMAIL SIGNUP ================= */
@@ -184,8 +187,9 @@ $: {
   type="tel"
   placeholder="Phone Number"
   bind:value={phone}
+  on:blur={() => phoneValid = true}
+  on:input={() => phoneValid && (phoneError = "")}
   inputmode="numeric"
-  pattern="[0-9]{10}"
   maxlength="10"
   class="input {phoneError ? 'input-error' : ''}"
 />
