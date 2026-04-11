@@ -10,13 +10,13 @@ import {
 import { createUserIfNotExists } from "./createUser";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAc82uQHx3ORRDFmwwf3zjDNjVFGZ-oPO0",
-  authDomain: "myproject-4b960.firebaseapp.com",
-  projectId: "myproject-4b960",
-  storageBucket: "myproject-4b960.firebasestorage.app",
-  messagingSenderId: "1092685242749",
-  appId: "1:1092685242749:web:728028a6fc6b547c07ec14",
-  measurementId: "G-12KTBYDX2V"
+  apiKey: "AIzaSyDLIfjHNP45eEFX47y-1WQIKLiuXHPAHJg",
+  authDomain: "hrhkfi.firebaseapp.com",
+  projectId: "hrhkfi",
+  storageBucket: "hrhkfi.firebasestorage.app",
+  messagingSenderId: "455623876075",
+  appId: "1:455623876075:web:24dfa85bdc876b7a304dae",
+  measurementId: "G-7WM3R8F756"
 };
 
 // Initialize Firebase
@@ -75,3 +75,11 @@ export async function signInUser(email: string, password: string) {
     password.trim()
   );
 }
+
+
+
+
+
+
+
+
