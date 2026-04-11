@@ -68,8 +68,8 @@ $: {
     phoneError = "";
   } 
   else if (phone.length < 10) {
-    phoneError = "";
-  } 
+  phoneError = "Enter valid 10 digit phone number";
+}
   else {
     phoneError = validatePhone(phone)
       ? ""
