@@ -242,8 +242,16 @@ $: activeWebinars = webinars.filter(
 
 onDestroy(() => {
   clearInterval(webinarInterval);
+  clearInterval(autoInterval);
 });
 </script>
+<svelte:head>
+  <title>School Time</title>
+  <meta
+    name="description"
+    content="Learn with courses, webinars, mentors and student tools in School Time."
+  />
+</svelte:head>
 <div class="page">
 
   <!-- ================= HEADER ================= -->
@@ -433,13 +441,12 @@ onDestroy(() => {
           {#if getStatus(webinar.schedule_at, webinar.duration) === "LIVE"}
               <div class="live-badge">LIVE</div>
            {/if}
-<img 
-  src={webinar.banner} 
-  alt="banner"
+                       <img
+  src={webinar.banner + '?width=400&quality=70&format=webp'}
+  alt={webinar.title}
   loading="lazy"
   width="400"
   height="200"
-  style="object-fit:cover"
 />
           <div class="webinar-content">
             <h4>{webinar.title}</h4>
