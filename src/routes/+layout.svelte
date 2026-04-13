@@ -374,8 +374,8 @@ onMount(() => {
     // 🔥 Get role
     const role = await fetchRole(user.uid);
 
-    console.log("UID:", user.uid);
-    console.log("ROLE:", role);
+    // console.log("UID:", user.uid);
+    // console.log("ROLE:", role);
 
     // 🔒 If on auth page → redirect AFTER role check
     if (currentPath.startsWith("/auth")) {
