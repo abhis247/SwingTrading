@@ -442,7 +442,7 @@ onDestroy(() => {
               <div class="live-badge">LIVE</div>
            {/if}
                        <img
-  src={webinar.banner + '?width=400&quality=70&format=webp'}
+  src={webinar.banner }
   alt={webinar.title}
   loading="lazy"
   width="400"
