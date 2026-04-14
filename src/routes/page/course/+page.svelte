@@ -6,24 +6,24 @@
   import AppBar from "$lib/AppBar1.svelte";
     import { Currency } from "lucide-svelte";
 
-  let activeTab = "project";
+  let activeTab = "Foundation";
   let courses: any[] = [];
   let loading = true;
   let user: any = null;
   let enrolledCourseIds = new Set<string>();
 
   const tabs = [
-    { key: "project", label: "Project" },
-    { key: "design", label: "Design" },
-    { key: "software", label: "Software" },
-    { key: "specialization", label: "Specialization" }
+    { key: "Foundation", label: "Foundation" },
+    { key: "Intermediate", label: "Intermediate" },
+    { key: "Advanced", label: "Advanced" },
+    { key: "Webinars", label: "Webinars" }
   ];
 
   const categoryMap: Record<string, string> = {
-    project: "Project & Cost Management Certifications",
-    design: "Design Development Training",
-    software: "Software Training",
-    specialization: "Specialization Training"
+  Foundation: "Foundation",
+  Intermediate: "Intermediate",
+  Advanced: "Advanced",
+  Webinars: "Webinars"
   };
 
   onMount(() => {

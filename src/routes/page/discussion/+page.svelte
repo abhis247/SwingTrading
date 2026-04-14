@@ -21,6 +21,9 @@
 
 
 
+  let imageError: Record<string, boolean> = {};
+
+
 let uploadedPostFile: any = null;
 let uploadedReplyFile: Record<string, any> = {};
 
@@ -29,7 +32,6 @@ let previewReply: Record<string, string | null> = {};
 
 let uploadingPost = false;
 let uploadingReply: Record<string, boolean> = {};
-
 
 async function handleFileUpload(file: File, type: "post" | "reply", postId?: string) {
   if (!file) return;
@@ -40,59 +42,27 @@ async function handleFileUpload(file: File, type: "post" | "reply", postId?: str
     return;
   }
 
-  if (file.type.startsWith("image/") && file.size > 2 * 1024 * 1024) {
-    alert("Image max 2MB");
+  // (optional limit — you used 88MB 😅)
+  if (file.size > 88 * 1024 * 1024) {
+    alert("File too large");
     return;
   }
 
-  if (file.type === "application/pdf" && file.size > 5 * 1024 * 1024) {
-    alert("PDF max 5MB");
-    return;
-  }
-
-  // Preview
+  // ✅ Preview
   if (file.type.startsWith("image/")) {
     if (type === "post") previewPost = URL.createObjectURL(file);
     else if (postId) previewReply[postId] = URL.createObjectURL(file);
   }
 
-  // Loading state
-  if (type === "post") uploadingPost = true;
-  else if (postId) uploadingReply[postId] = true;
+  // ❌ REMOVE ALL SUPABASE UPLOAD CODE FROM HERE
 
-  const path = file.type.startsWith("image/")
-    ? `images/${Date.now()}-${file.name}`
-    : `pdfs/${Date.now()}-${file.name}`;
-
-  const { error } = await supabase.storage
-    .from("uploads")
-    .upload(path, file);
-
-  if (error) {
-    alert(error.message);
-    if (type === "post") uploadingPost = false;
-    else if (postId) uploadingReply[postId] = false;
-    return;
-  }
-
-  const { data } = supabase.storage
-    .from("uploads")
-    .getPublicUrl(path);
-
-  const fileData = {
-    url: data.publicUrl,
-    type: file.type.startsWith("image/") ? "image" : "pdf"
-  };
-
+  // ✅ Just store file
   if (type === "post") {
-    uploadedPostFile = fileData;
-    uploadingPost = false;
+    uploadedPostFile = file;
   } else if (postId) {
-    uploadedReplyFile[postId] = fileData;
-    uploadingReply[postId] = false;
+    uploadedReplyFile[postId] = file;
   }
 }
- 
 function handleClickOutside(event: MouseEvent) {
   const target = event.target as HTMLElement;
 
@@ -170,20 +140,51 @@ onDestroy(() => {
   // ADD POST
   //////////////////////////////////////////////////////
   async function addPost() {
-    if (!user || !newPost.trim()) return;
+  if (!user || !newPost.trim()) return;
 
-    await supabase.from("posts").insert({
-      user_uid: user.uid,
-      user_name: user.displayName ?? "User",
-      user_photo: user.photoURL,
-      content: newPost.trim(),
-      created_at: new Date().toISOString(),
-      likes_count: 0
-    });
+  let fileUrl = null;
+  let fileType = null;
 
-    newPost = "";
+  // ✅ Upload happens HERE
+  if (uploadedPostFile) {
+    const file = uploadedPostFile;
+
+    const path = `images/${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage.from("uploads")
+    .upload(path, file)
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from("uploads")
+      .getPublicUrl(path);
+
+    fileUrl = data.publicUrl;
+    fileType = file.type.startsWith("image/") ? "image" : "pdf";
   }
 
+  await supabase.from("posts").insert({
+    user_uid: user.uid,
+    user_name: user.displayName ?? "User",
+    user_photo: user.photoURL,
+    content: newPost.trim(),
+    file_url: fileUrl,
+    file_type: fileType,
+    created_at: new Date().toISOString(),
+    likes_count: 0
+  });
+
+  // reset
+  newPost = "";
+  uploadedPostFile = null;
+  previewPost = null;
+
+  await loadPosts();
+}
   //////////////////////////////////////////////////////
   // ADD REPLY
   //////////////////////////////////////////////////////
@@ -378,13 +379,30 @@ function closeEdit() {
 
       <div class="header">
 
-        {#if post.user_photo}
-          <img class="avatar-img" src={post.user_photo} />
-        {:else}
-          <div class="avatar-letter">
-            {getInitial(post.user_name)}
-          </div>
-        {/if}
+
+{#if !imageError[post.id] && (post.user_uid === user?.uid
+  ? user?.photoURL
+  : post.user_photo)}
+
+  <img
+    class="avatar-img"
+    src={
+      post.user_uid === user?.uid
+        ? user?.photoURL
+        : post.user_photo
+    }
+    alt="profile"
+      referrerpolicy="no-referrer"
+    on:error={() => imageError[post.id] = true}
+  />
+
+{:else}
+
+  <div class="avatar-letter">
+    {(post.user_name || "U").charAt(0).toUpperCase()}
+  </div>
+
+{/if}
 
         <div class="user-info">
           <strong>{post.user_name}</strong>
@@ -416,6 +434,13 @@ function closeEdit() {
       </div>
 
       <p class="content">{post.content}</p>
+      {#if post.file_url && post.file_type === "image"}
+  <img alt="post" src={post.file_url} class="post-img" />
+{/if}
+
+{#if post.file_type === "pdf"}
+  <a href={post.file_url} target="_blank">📄 View PDF</a>
+{/if}
 
       <div class="actions">
         <button
