@@ -37,7 +37,7 @@ export default defineConfig({
         short_name: 'Swing trading',
         description: 'My PWA App',
 
-        start_url: '/page/home', // 🔥 FIXED
+        start_url: '/', // 🔥 FIXED
         scope: '/',              // 🔥 REQUIRED
 
         display: 'standalone',
