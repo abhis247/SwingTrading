@@ -22,10 +22,10 @@
   let bannerPreview = "";
 
   let categories = [
-    "Project & Cost Management Certifications",
-    "Design Development Training",
-    "Software Training",
-    "Specialization Training",
+    "Foundation",
+    "Intermediate",
+    "Advanced",
+    "Webinars",
   ];
 
   // subjects
